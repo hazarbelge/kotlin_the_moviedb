@@ -4,8 +4,7 @@
     <item
         android:id="@+id/app_bar_profile"
         android:icon="@drawable/ic_profile"
-        android:title="Search"
-        app:actionViewClass="android.widget.SearchView"
+        android:title="Profile"
         app:showAsAction="collapseActionView|ifRoom" />
 
     <item

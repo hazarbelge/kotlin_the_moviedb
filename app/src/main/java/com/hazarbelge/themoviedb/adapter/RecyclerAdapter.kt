@@ -18,21 +18,21 @@ import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.*
 
-class RecyclerAdapter(val context: Context) : RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>() {
+class RecyclerAdapter(val context: Context) : RecyclerView.Adapter<RecyclerAdapter.ViewMovieHolder>() {
 
     var movieList : List<Movie> = listOf()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewMovieHolder {
 
         val view = LayoutInflater.from(parent.context).inflate(R.layout.movie_items,parent,false)
-        return MyViewHolder(view)
+        return ViewMovieHolder(view)
     }
 
     override fun getItemCount(): Int {
         return movieList.size
     }
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewMovieHolder, position: Int) {
 
         val date = LocalDate.parse(movieList.get(position).release_date)
 
@@ -45,7 +45,7 @@ class RecyclerAdapter(val context: Context) : RecyclerView.Adapter<RecyclerAdapt
 
         holder.cardView.setOnClickListener {
             val intent = Intent(context, ProfileActivity::class.java)
-            intent.putExtra("position",position)
+            intent.putExtra("movieid",movieList.get(position).id)
             context.startActivity(intent);
         }
 
@@ -56,7 +56,7 @@ class RecyclerAdapter(val context: Context) : RecyclerView.Adapter<RecyclerAdapt
         notifyDataSetChanged()
     }
 
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewMovieHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val cardView: CardView = itemView.findViewById(R.id.cardView)
         val tvMovieName: TextView = itemView.findViewById(R.id.title)

@@ -6,4 +6,67 @@
     android:layout_height="match_parent"
     tools:context=".ProfileActivity">
 
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@+id/bnView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerProfile"
+            android:layout_width="477dp"
+            android:layout_height="1444dp"
+            app:layout_constraintBottom_toTopOf="@+id/bnView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:layout_constraintVertical_bias="0.101">
+
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </ScrollView>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#032541"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/profile_logo"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:cropToPadding="true"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/ic_logo"
+            tools:layout_editor_absoluteX="16dp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bnView"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFDFD"
+        app:backgroundTint="#032541"
+        app:itemBackground="@android:color/transparent"
+        app:itemIconTint="@color/design_default_color_on_primary"
+        app:itemRippleColor="#FFFFFF"
+        app:labelVisibilityMode="unlabeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bnv_menu" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

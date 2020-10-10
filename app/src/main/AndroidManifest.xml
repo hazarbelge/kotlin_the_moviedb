@@ -15,7 +15,8 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="p">
         <activity android:name=".ProfileActivity"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity"
+            android:label=""></activity>
         <activity android:name=".MainActivity"
             android:label="">
             <intent-filter>
