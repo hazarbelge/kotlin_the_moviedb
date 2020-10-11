@@ -12,7 +12,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.hazarbelge.themoviedb.R
 import com.hazarbelge.themoviedb.dto.Actor
 
-class CastAdapter(val context: Context) : RecyclerView.Adapter<CastAdapter.ViewCastHolder>() {
+class CastAdapter(private val context: Context) : RecyclerView.Adapter<CastAdapter.ViewCastHolder>() {
 
     var actorList : List<Actor> = listOf()
 
@@ -35,8 +35,8 @@ class CastAdapter(val context: Context) : RecyclerView.Adapter<CastAdapter.ViewC
             .into(holder.profile_path)
     }
 
-    fun setActorListItems(actorList: List<Actor>){
-        this.actorList = actorList;
+    fun bind(actorList: List<Actor>){
+        this.actorList = actorList
         notifyDataSetChanged()
     }
 

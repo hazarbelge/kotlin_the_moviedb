@@ -11,7 +11,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="60dp"
         android:background="#032541"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,10 +19,11 @@
 
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="55dp"
+            android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/imagecontent"
             android:cropToPadding="true"
             android:scaleType="centerInside"
             app:srcCompat="@drawable/ic_logo"
@@ -41,12 +42,12 @@
 
     <TextView
         android:id="@+id/tView"
-        android:layout_width="319dp"
+        android:layout_width="wrap_content"
         android:layout_height="42dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="10dp"
-        android:text="Gösterimdeki Filmler"
+        android:text=""
         android:textColor="#000000"
         android:textColorHint="#000000"
         android:textSize="30sp"

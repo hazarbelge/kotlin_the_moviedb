@@ -1,7 +1,6 @@
 package com.hazarbelge.themoviedb.adapter
 
 import android.content.Context
-import android.icu.text.StringSearch
 import android.text.Html
 import android.view.View
 import android.widget.ImageView
@@ -39,12 +38,12 @@ class ProfileAdapter(){
 
         var genres:String? = ""
         for(element in movie.genres) genres += "${element["name"]}, "
-        movieGenres.text = genres!!.substring(0, genres.length-2);
+        movieGenres.text = genres!!.substring(0, genres.length-2)
 
         if(movie.runtime.toInt() >= 60) movieRuntime.text = "${movie.runtime.toInt()/60}h ${movie.runtime.toInt()%60}m"
         else movieRuntime.text = movie.runtime
 
-        val text: String = "<font color=#ffffff>${movie.title}</font> <font color=#cce0e3>(${date.year})</font>"
+        val text = "<font color=#ffffff>${movie.title}</font> <font color=#cce0e3>(${date.year})</font>"
         movieName.text = Html.fromHtml(text)
 
         movieTagline.text = movie.tagline
@@ -52,20 +51,22 @@ class ProfileAdapter(){
 
         val string: String = context.getString(R.string.language)
         if(string == "tr") {
-            movieHeadline.text =  "Özet"
-            movieMembers.text = "Üye Puanları"
+            if(movie.overview == "") movieHeadline.text =  ""
+            else movieHeadline.text =  "Özet"
+            movieMembers.text = "Üye\nPuanları"
             movieActors.text = "Başrol Oyuncuları"
         }
         else if(string == "en"){
-            movieHeadline.text =  "Overview"
-            movieMembers.text = "Members Vote"
+            if(movie.overview == "")  movieHeadline.text =  ""
+            else movieHeadline.text =  "Özet"
+            movieMembers.text = "Members\nVote"
             movieActors.text = "Cast"
         }
 
         movieProgress.progress = (movie.vote_average*10).toInt()
         view.progressText.text = (movie.vote_average*10).toInt().toString() + "%"
 
-        if(movie.status.equals("Released")) movieStatus.setImageResource(R.drawable.ic_released)
+        if(movie.status == "Released") movieStatus.setImageResource(R.drawable.ic_released)
         Glide.with(context).load("https://image.tmdb.org/t/p/w600_and_h900_bestv2/" + movie.poster_path)
             .apply(RequestOptions().centerCrop())
             .into(poster_path)

@@ -33,12 +33,10 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="0dp"
                 android:layout_marginTop="0dp"
-                android:layout_marginEnd="0dp"
+                android:contentDescription="@string/imagecontent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="@string/imagecontent" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/poster"
@@ -46,11 +44,11 @@
                 android:layout_height="156dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="45dp"
+                android:layout_marginStart="35dp"
                 android:layout_marginTop="25dp"
+                android:contentDescription="@string/imagecontent"
                 app:layout_constraintBottom_toTopOf="@id/profile_title"
-                app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="@string/imagecontent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/profile_title"
@@ -66,21 +64,53 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/profile_members"
+            <RelativeLayout
+                android:id="@+id/relativeVote"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/profile_title"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
-                android:layout_gravity="center"
-                android:layout_marginStart="225dp"
-                android:layout_marginTop="18dp"
-                android:layout_marginEnd="106dp"
-                android:textColor="@android:color/white"
-                android:textColorHint="#FFFFFF"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="0dp">
+
+                <TextView
+                    android:id="@+id/profile_members"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/progressBar"
+                    android:layout_marginTop="7dp"
+                    android:layout_toEndOf="@+id/progressBar"
+                    android:textColor="@android:color/white"
+                    android:textColorHint="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="14dp"
+                    android:max="100"
+                    android:progressDrawable="@drawable/circle"
+                    android:rotation="-90" />
+
+                <TextView
+                    android:id="@+id/progressText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_alignStart="@+id/progressBar"
+                    android:layout_alignTop="@+id/progressBar"
+                    android:layout_alignEnd="@+id/progressBar"
+                    android:layout_alignBottom="@+id/progressBar"
+                    android:layout_alignParentStart="false"
+                    android:gravity="center"
+                    android:textAlignment="gravity"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
 
             <TextView
                 android:id="@+id/profile_tagline"
@@ -100,7 +130,7 @@
                 android:id="@+id/relativeInfo"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
-                android:layout_below="@+id/profile_members"
+                android:layout_below="@+id/relativeVote"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="0dp"
@@ -108,61 +138,67 @@
                 android:layout_marginEnd="0dp"
                 android:background="#0e606f">
 
-                <TextView
-                    android:id="@+id/profile_release_date"
+                <RelativeLayout
+                    android:id="@+id/relativeInfoDeep"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="1dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_toEndOf="@+id/profile_status"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp"
-                    android:textStyle="normal" />
-
-                <TextView
-                    android:id="@+id/profile_runtime"
-                    android:layout_width="63dp"
-                    android:layout_height="wrap_content"
-                    android:layout_above="@+id/profile_genres"
+                    android:layout_alignParentStart="false"
                     android:layout_alignParentEnd="false"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_toEndOf="@+id/imageView"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp"
-                    android:textStyle="normal" />
+                    android:layout_centerHorizontal="true"
+                    android:background="#0e606f">
 
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="9dp"
-                    android:layout_height="6dp"
-                    android:layout_above="@+id/profile_genres"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginTop="18dp"
-                    android:layout_marginBottom="7dp"
-                    android:layout_toEndOf="@+id/profile_release_date"
-                    android:contentDescription="@string/imagecontent"
-                    app:srcCompat="@android:drawable/radiobutton_off_background" />
+                    <TextView
+                        android:id="@+id/profile_release_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toEndOf="@+id/profile_status"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:textStyle="normal" />
 
-                <ImageView
-                    android:id="@+id/profile_status"
-                    android:layout_width="19dp"
-                    android:layout_height="wrap_content"
-                    android:layout_above="@+id/profile_genres"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="110dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="2dp"
-                    android:padding="1dp"
-                    android:contentDescription="@string/imagecontent"/>
+                    <TextView
+                        android:id="@+id/profile_runtime"
+                        android:layout_width="63dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="false"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_toEndOf="@+id/imageView"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:textStyle="normal" />
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="9dp"
+                        android:layout_height="6dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginTop="18dp"
+                        android:layout_marginBottom="7dp"
+                        android:layout_toEndOf="@+id/profile_release_date"
+                        android:contentDescription="@string/imagecontent"
+                        app:srcCompat="@android:drawable/radiobutton_off_background" />
+
+                    <ImageView
+                        android:id="@+id/profile_status"
+                        android:layout_width="19dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="8dp"
+                        android:contentDescription="@string/imagecontent"
+                        android:padding="1dp" />
+
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/profile_genres"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/profile_release_date"
+                    android:layout_below="@+id/relativeInfoDeep"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="0dp"
                     android:gravity="center|center_horizontal|center_vertical"
@@ -236,7 +272,7 @@
                 android:layout_below="@+id/profile_overview"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="30dp"
-                android:layout_marginEnd="35dp"
+                android:layout_marginEnd="45dp"
                 android:textAlignment="textStart"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
@@ -251,7 +287,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="0dp"
-                android:layout_marginEnd="35dp"
+                android:layout_marginEnd="45dp"
                 android:textAlignment="textStart"
                 android:textColor="#cce0e3"
                 android:textSize="16sp"
@@ -293,36 +329,6 @@
 
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/progressText"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:layout_alignStart="@+id/progressBar"
-                android:layout_alignTop="@+id/progressBar"
-                android:layout_alignEnd="@+id/progressBar"
-                android:layout_alignBottom="@+id/progressBar"
-                android:gravity="center"
-                android:textAlignment="gravity"
-                android:textColor="#FFFFFF"
-                android:textColorHint="#FFFFFF"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_above="@+id/relativeInfo"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="163dp"
-                android:layout_marginTop="274dp"
-                android:layout_marginBottom="-9dp"
-                android:max="100"
-                android:progressDrawable="@drawable/circle"
-                android:rotation="-90" />
-
         </RelativeLayout>
 
 
@@ -331,7 +337,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="60dp"
         android:background="#032541"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -339,7 +345,7 @@
 
         <ImageView
             android:id="@+id/profile_logo"
-            android:layout_width="55dp"
+            android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:adjustViewBounds="true"
@@ -353,7 +359,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bnView"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:background="#FFFDFD"
         app:backgroundTint="#032541"

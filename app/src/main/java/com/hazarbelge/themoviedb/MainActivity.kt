@@ -18,10 +18,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+        title = ""
         toolbar.setNavigationIcon(R.drawable.ic_menu)
 
-        recycleViewHandler()
+        val string: String = getString(R.string.language)
+        if(string == "tr") tView.text =  "Gösterimdeki Filmler"
+        else if(string == "en") tView.text =  "Now Playing"
 
+        recycleViewHandler()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -41,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         apiInterface.enqueue(object : Callback<Movies> {
             override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
                 println("response var: " + response)
-                if (response.body() != null) recyclerAdapter.setMovieListItems(response.body()!!.results)
+                recyclerAdapter.bind(response.body()!!.results)
             }
             override fun onFailure(call: Call<Movies>?, t: Throwable?) {
                 println("response basarisiz: " + t)

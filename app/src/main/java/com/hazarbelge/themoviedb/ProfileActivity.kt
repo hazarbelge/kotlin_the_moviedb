@@ -1,17 +1,11 @@
 package com.hazarbelge.themoviedb
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
-import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.hazarbelge.themoviedb.adapter.CastAdapter
 import com.hazarbelge.themoviedb.adapter.ProfileAdapter
 import com.hazarbelge.themoviedb.dto.Cast
@@ -22,9 +16,6 @@ import kotlinx.android.synthetic.main.activity_profile.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-
 
 class ProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,8 +28,6 @@ class ProfileActivity : AppCompatActivity() {
         networkHandlerProfile(position!!)
         networkHandlerCast(position)
         networkHandlerCrew(position)
-
-        bnavItemHandler()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -48,12 +37,9 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun networkHandlerProfile(movieID: String) {
 
-        val apiInterface = ApiInterface.create().getProfiles(
-            movieID, getString(R.string.api_key), getString(
+        val apiInterface = ApiInterface.create().getProfiles(movieID, getString(R.string.api_key), getString(
                 R.string.language
-            )
-        )
-
+            ))
         val adapter = ProfileAdapter()
 
         apiInterface.enqueue(object : Callback<Movie> {
@@ -61,7 +47,6 @@ class ProfileActivity : AppCompatActivity() {
                 println("response var: " + response)
                 adapter.responseHandler(response.body()!!, scrollview,this@ProfileActivity)
             }
-
             override fun onFailure(call: Call<Movie>?, t: Throwable?) {
                 println("response basarisiz: " + t)
             }
@@ -81,9 +66,8 @@ class ProfileActivity : AppCompatActivity() {
         apiInterface.enqueue(object : Callback<Cast> {
             override fun onResponse(call: Call<Cast>, response: Response<Cast>) {
                 println("response var: " + response)
-                recyclerAdapter.setActorListItems(response.body()!!.cast)
+                recyclerAdapter.bind(response.body()!!.cast)
             }
-
             override fun onFailure(call: Call<Cast>?, t: Throwable?) {
                 println("response basarisiz: " + t)
             }
@@ -98,7 +82,6 @@ class ProfileActivity : AppCompatActivity() {
                 println("response var: " + response)
                 responseHandlerCrew(response.body()!!)
             }
-
             override fun onFailure(call: Call<Crew>?, t: Throwable?) {
                 println("response basarisiz: " + t)
             }
@@ -110,30 +93,27 @@ class ProfileActivity : AppCompatActivity() {
         val director: TextView = findViewById(R.id.director)
 
         for(element in crew.crew) {
-            if(element.job.equals("Director")) {
+            if(element.job == "Director") {
                 director.text = element.name
                 directorText.text = element.job
             }
-            else if(element.job.equals("Screenplay")) {
+            else if(element.job == "Screenplay") {
                 screenplay.text = element.name
                 screenplayText.text = element.job
             }
         }
     }
 
-    private fun bnavItemHandler() {
+    //BottomNavigatinView icin itemlar hazirlandi, gerektiginde kullanilabilir durumda.
+    /*private fun bnavItemHandler() {
         bnView.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.menuBNV -> {
-                }
-                R.id.favBNV -> {
-                }
-                R.id.bookmarkBNV -> {
-                }
-                R.id.starBNV -> {
-                }
+                R.id.menuBNV -> { }
+                R.id.favBNV -> { }
+                R.id.bookmarkBNV -> { }
+                R.id.starBNV -> { }
             }
             return@OnNavigationItemSelectedListener false
         })
-    }
+    }*/
 }

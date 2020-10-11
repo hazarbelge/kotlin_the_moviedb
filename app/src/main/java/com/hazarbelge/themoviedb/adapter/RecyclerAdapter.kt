@@ -18,7 +18,7 @@ import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.*
 
-class RecyclerAdapter(val context: Context) : RecyclerView.Adapter<RecyclerAdapter.ViewMovieHolder>() {
+class RecyclerAdapter(private val context: Context) : RecyclerView.Adapter<RecyclerAdapter.ViewMovieHolder>() {
 
     var movieList : List<Movie> = listOf()
 
@@ -33,11 +33,13 @@ class RecyclerAdapter(val context: Context) : RecyclerView.Adapter<RecyclerAdapt
     }
 
     override fun onBindViewHolder(holder: ViewMovieHolder, position: Int) {
-        val date = LocalDate.parse(movieList[position].release_date)
 
-        holder.tvMovieName.text = movieList[position].title
-        holder.tvMovieDate.text = "${date.month.getDisplayName(TextStyle.FULL, Locale("tr")).toLowerCase()} ${date.dayOfMonth}, ${date.year}"
-        holder.tvMovieOverview.text = movieList[position].overview
+        val date = LocalDate.parse(movieList[position].release_date)
+        holder.movieDate.text = "${date.month.getDisplayName(TextStyle.FULL, Locale("tr")).toLowerCase()} ${date.dayOfMonth}, ${date.year}"
+
+        holder.movieName.text = movieList[position].title
+        holder.movieOverview.text = movieList[position].overview
+
         Glide.with(context).load("https://image.tmdb.org/t/p/w220_and_h330_face/" + movieList[position].poster_path)
             .apply(RequestOptions().centerCrop())
             .into(holder.poster_path)
@@ -45,23 +47,21 @@ class RecyclerAdapter(val context: Context) : RecyclerView.Adapter<RecyclerAdapt
         holder.cardView.setOnClickListener {
             val intent = Intent(context, ProfileActivity::class.java)
             intent.putExtra("movieid", movieList[position].id)
-            context.startActivity(intent);
+            context.startActivity(intent)
         }
-
     }
 
-    fun setMovieListItems(movieList: List<Movie>){
-        this.movieList = movieList;
+    fun bind(movieList: List<Movie>){
+        this.movieList = movieList
         notifyDataSetChanged()
     }
 
     class ViewMovieHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val cardView: CardView = itemView.findViewById(R.id.cardView)
-        val tvMovieName: TextView = itemView.findViewById(R.id.title)
+        val movieName: TextView = itemView.findViewById(R.id.title)
         val poster_path: ImageView = itemView.findViewById(R.id.poster_path)
-        val tvMovieDate: TextView = itemView.findViewById(R.id.release_date)
-        val tvMovieOverview: TextView = itemView.findViewById(R.id.overview)
-
+        val movieDate: TextView = itemView.findViewById(R.id.release_date)
+        val movieOverview: TextView = itemView.findViewById(R.id.overview)
     }
 }
