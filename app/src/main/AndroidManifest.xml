@@ -9,7 +9,7 @@
         android:label="TheMovieDB"
         android:allowBackup="true"
         android:icon="@mipmap/ic_appicon"
-        android:roundIcon="@mipmap/ic_appicon"
+        android:roundIcon="@mipmap/ic_appicon_round"
         android:theme="@style/AppTheme"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true">
