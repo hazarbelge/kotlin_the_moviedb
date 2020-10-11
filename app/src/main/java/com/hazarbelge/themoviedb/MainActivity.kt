@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     private fun recycleViewHandler() {
 
         val recyclerView: RecyclerView = findViewById(R.id.recyclerview)
-        val recyclerAdapter: RecyclerAdapter = RecyclerAdapter(this)
+        val recyclerAdapter = RecyclerAdapter(this)
         recyclerview.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = recyclerAdapter
 
@@ -41,10 +41,8 @@ class MainActivity : AppCompatActivity() {
         apiInterface.enqueue(object : Callback<Movies> {
             override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
                 println("response var: " + response)
-                if (response.body() != null)
-                    recyclerAdapter.setMovieListItems(response.body()!!.results)
+                if (response.body() != null) recyclerAdapter.setMovieListItems(response.body()!!.results)
             }
-
             override fun onFailure(call: Call<Movies>?, t: Throwable?) {
                 println("response basarisiz: " + t)
             }

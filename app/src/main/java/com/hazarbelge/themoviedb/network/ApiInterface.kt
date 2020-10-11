@@ -1,5 +1,7 @@
 package com.hazarbelge.themoviedb.network
 
+import com.hazarbelge.themoviedb.dto.Cast
+import com.hazarbelge.themoviedb.dto.Crew
 import com.hazarbelge.themoviedb.dto.Movie
 import com.hazarbelge.themoviedb.dto.Movies
 import retrofit2.Call
@@ -15,6 +17,11 @@ interface ApiInterface {
     @GET("/3/movie/{movieID}")
     fun getProfiles(@Path("movieID") movieID: String?, @Query("api_key") key: String, @Query("language") language: String) : Call<Movie>
 
+    @GET("/3/movie/{movieID}/credits")
+    fun getCast(@Path("movieID") movieID: String?, @Query("api_key") key: String, @Query("language") language: String) : Call<Cast>
+
+    @GET("/3/movie/{movieID}/credits")
+    fun getCrew(@Path("movieID") movieID: String?, @Query("api_key") key: String, @Query("language") language: String) : Call<Crew>
 
     companion object {
 

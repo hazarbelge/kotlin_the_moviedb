@@ -33,19 +33,18 @@ class RecyclerAdapter(val context: Context) : RecyclerView.Adapter<RecyclerAdapt
     }
 
     override fun onBindViewHolder(holder: ViewMovieHolder, position: Int) {
+        val date = LocalDate.parse(movieList[position].release_date)
 
-        val date = LocalDate.parse(movieList.get(position).release_date)
-
-        holder.tvMovieName.text = movieList.get(position).title
+        holder.tvMovieName.text = movieList[position].title
         holder.tvMovieDate.text = "${date.month.getDisplayName(TextStyle.FULL, Locale("tr")).toLowerCase()} ${date.dayOfMonth}, ${date.year}"
-        holder.tvMovieOverview.text = movieList.get(position).overview
-        Glide.with(context).load("https://image.tmdb.org/t/p/w220_and_h330_face/" + movieList.get(position).poster_path)
+        holder.tvMovieOverview.text = movieList[position].overview
+        Glide.with(context).load("https://image.tmdb.org/t/p/w220_and_h330_face/" + movieList[position].poster_path)
             .apply(RequestOptions().centerCrop())
             .into(holder.poster_path)
 
         holder.cardView.setOnClickListener {
             val intent = Intent(context, ProfileActivity::class.java)
-            intent.putExtra("movieid",movieList.get(position).id)
+            intent.putExtra("movieid", movieList[position].id)
             context.startActivity(intent);
         }
 
