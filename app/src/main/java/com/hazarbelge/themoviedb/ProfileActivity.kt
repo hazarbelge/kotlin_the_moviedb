@@ -1,6 +1,7 @@
 package com.hazarbelge.themoviedb
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.Menu
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -12,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.hazarbelge.themoviedb.adapter.CastAdapter
+import com.hazarbelge.themoviedb.adapter.ProfileAdapter
 import com.hazarbelge.themoviedb.dto.Cast
 import com.hazarbelge.themoviedb.dto.Crew
 import com.hazarbelge.themoviedb.dto.Movie
@@ -31,12 +33,12 @@ class ProfileActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         toolbar.setNavigationIcon(R.drawable.ic_menu)
 
-        bnavItemHandler()
-
         val position = intent.getStringExtra("movieid")
         networkHandlerProfile(position!!)
         networkHandlerCast(position)
         networkHandlerCrew(position)
+
+        bnavItemHandler()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -52,10 +54,12 @@ class ProfileActivity : AppCompatActivity() {
             )
         )
 
+        val adapter = ProfileAdapter()
+
         apiInterface.enqueue(object : Callback<Movie> {
             override fun onResponse(call: Call<Movie>, response: Response<Movie>) {
                 println("response var: " + response)
-                responseHandler(response.body()!!)
+                adapter.responseHandler(response.body()!!, scrollview,this@ProfileActivity)
             }
 
             override fun onFailure(call: Call<Movie>?, t: Throwable?) {
@@ -92,7 +96,7 @@ class ProfileActivity : AppCompatActivity() {
         apiInterface.enqueue(object : Callback<Crew> {
             override fun onResponse(call: Call<Crew>, response: Response<Crew>) {
                 println("response var: " + response)
-                responseHandler(response.body()!!)
+                responseHandlerCrew(response.body()!!)
             }
 
             override fun onFailure(call: Call<Crew>?, t: Throwable?) {
@@ -101,57 +105,19 @@ class ProfileActivity : AppCompatActivity() {
         })
     }
 
-    private fun responseHandler(movie: Movie){
-
-        val movieName: TextView = findViewById(R.id.profile_title)
-        val poster_path: ImageView = findViewById(R.id.poster)
-        val backdrop_path: ImageView = findViewById(R.id.bg_poster)
-        val movieStatus: ImageView = findViewById(R.id.profile_status)
-        val movieDate: TextView = findViewById(R.id.profile_release_date)
-        val movieOverview: TextView = findViewById(R.id.profile_overview)
-        val movieGenres: TextView = findViewById(R.id.profile_genres)
-        val movieHeadline: TextView = findViewById(R.id.profile_headline)
-        val movieMembers: TextView = findViewById(R.id.profile_members)
-        val movieTagline: TextView = findViewById(R.id.profile_tagline)
-        val movieRuntime: TextView = findViewById(R.id.profile_runtime)
-        val movieProgress: ProgressBar = findViewById(R.id.progressBar)
-
-        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-        val date = LocalDate.parse(movie.release_date)
-        movieDate.text = formatter.format(date) + " (${movie.production_countries[0]["iso_3166_1"]})"
-
-        var genres:String? = ""
-        for(element in movie.genres) genres += "${element["name"]}, "
-        movieGenres.text = genres!!.substring(0, genres.length-2);
-
-        if(movie.runtime.toInt() >= 60) movieRuntime.text = "${movie.runtime.toInt()/60}h ${movie.runtime.toInt()%60}m"
-        else movieRuntime.text = movie.runtime
-
-        movieTagline.text = movie.tagline
-        movieName.text = "${movie.title} (${date.year})"
-        movieOverview.text = movie.overview
-        movieHeadline.text = "Özet"
-        movieMembers.text = "Üye Puanları"
-
-        movieProgress.progress = (movie.vote_average*10).toInt()
-        progressText.text = (movie.vote_average*10).toInt().toString() + "%"
-
-        if(movie.status.equals("Released")) movieStatus.setImageResource(R.drawable.ic_released)
-        Glide.with(this).load("https://image.tmdb.org/t/p/w600_and_h900_bestv2/" + movie.poster_path)
-            .apply(RequestOptions().centerCrop())
-            .into(poster_path)
-        Glide.with(this).load("https://image.tmdb.org/t/p/w533_and_h300_bestv2/" + movie.backdrop_path)
-            .apply(RequestOptions().centerCrop())
-            .into(backdrop_path)
-    }
-
-    private fun responseHandler(crew: Crew){
+    private fun responseHandlerCrew(crew: Crew){
         val screenplay: TextView = findViewById(R.id.screenplay)
         val director: TextView = findViewById(R.id.director)
 
         for(element in crew.crew) {
-            if(element.job.equals("Director")) director.text = element.name + "\n" + element.job
-            else if(element.job.equals("Screenplay")) screenplay.text = element.name + "\n" + element.job
+            if(element.job.equals("Director")) {
+                director.text = element.name
+                directorText.text = element.job
+            }
+            else if(element.job.equals("Screenplay")) {
+                screenplay.text = element.name
+                screenplayText.text = element.job
+            }
         }
     }
 

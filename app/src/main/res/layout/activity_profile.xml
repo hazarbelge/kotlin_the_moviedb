@@ -37,7 +37,8 @@
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/imagecontent" />
 
             <ImageView
                 android:id="@+id/poster"
@@ -48,17 +49,18 @@
                 android:layout_marginStart="45dp"
                 android:layout_marginTop="25dp"
                 app:layout_constraintBottom_toTopOf="@id/profile_title"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/imagecontent"/>
 
             <TextView
                 android:id="@+id/profile_title"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/bg_poster"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="false"
+                android:layout_alignParentEnd="false"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="25dp"
-                android:gravity="center"
                 android:textAlignment="center"
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
@@ -82,16 +84,16 @@
 
             <TextView
                 android:id="@+id/profile_tagline"
-                android:layout_width="235dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relativeInfo"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="35dp"
                 android:layout_marginTop="25dp"
                 android:layout_marginEnd="40dp"
-                android:textColor="@android:color/darker_gray"
-                android:textColorHint="@android:color/darker_gray"
-                android:textSize="14sp"
+                android:textColor="#A0BEC3"
+                android:textColorHint="#9fc4ca"
+                android:textSize="16sp"
                 android:textStyle="normal" />
 
             <RelativeLayout
@@ -140,6 +142,7 @@
                     android:layout_marginTop="18dp"
                     android:layout_marginBottom="7dp"
                     android:layout_toEndOf="@+id/profile_release_date"
+                    android:contentDescription="@string/imagecontent"
                     app:srcCompat="@android:drawable/radiobutton_off_background" />
 
                 <ImageView
@@ -151,18 +154,16 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="110dp"
                     android:layout_marginTop="10dp"
-
                     android:layout_marginBottom="2dp"
-                    android:padding="1dp" />
+                    android:padding="1dp"
+                    android:contentDescription="@string/imagecontent"/>
 
                 <TextView
                     android:id="@+id/profile_genres"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/profile_release_date"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="0dp"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="0dp"
                     android:gravity="center|center_horizontal|center_vertical"
                     android:textAlignment="center"
@@ -174,14 +175,12 @@
 
             <TextView
                 android:id="@+id/profile_headline"
-                android:layout_width="78dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/profile_tagline"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
                 android:layout_marginStart="35dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="287dp"
                 android:textColor="@android:color/white"
                 android:textColorHint="#FFFFFF"
                 android:textSize="28sp"
@@ -198,7 +197,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="35dp"
                 android:textAlignment="inherit"
-                android:textColor="@android:color/white"
+                android:textColor="#cce0e3"
                 android:textSize="16sp"
                 android:textStyle="normal" />
 
@@ -214,7 +213,21 @@
                 android:textAlignment="inherit"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
-                android:textStyle="normal|bold" />
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/directorText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/director"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="false"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="0dp"
+                android:textAlignment="inherit"
+                android:textColor="#cce0e3"
+                android:textSize="16sp"
+                android:textStyle="normal" />
 
             <TextView
                 android:id="@+id/screenplay"
@@ -227,13 +240,28 @@
                 android:textAlignment="textStart"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
-                android:textStyle="normal|bold" />
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/screenplayText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/screenplay"
+                android:layout_alignStart="@+id/screenplay"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="35dp"
+                android:textAlignment="textStart"
+                android:textColor="#cce0e3"
+                android:textSize="16sp"
+                android:textStyle="normal" />
 
             <RelativeLayout
                 android:id="@+id/relativeStars"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/director"
+                android:layout_below="@id/directorText"
                 android:layout_marginTop="30dp"
                 android:background="#FFFFFF"
                 android:visibility="visible">
@@ -258,7 +286,6 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="36dp"
-                    android:text="Başrol Oyuncuları"
                     android:textColor="@android:color/black"
                     android:textColorHint="#000000"
                     android:textSize="24sp"
@@ -316,6 +343,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/imagecontent"
             android:cropToPadding="true"
             android:scaleType="centerInside"
             app:srcCompat="@drawable/ic_logo"
