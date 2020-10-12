@@ -51,14 +51,16 @@ class ProfileAdapter(){
 
         val string: String = context.getString(R.string.language)
         if(string == "tr") {
-            if(movie.overview == "") movieHeadline.text =  ""
+            if(movie.tagline == "") movieTagline.visibility = View.GONE
+            if(movie.overview == "") movieHeadline.visibility = View.GONE
             else movieHeadline.text =  "Özet"
             movieMembers.text = "Üye\nPuanları"
             movieActors.text = "Başrol Oyuncuları"
         }
         else if(string == "en"){
-            if(movie.overview == "")  movieHeadline.text =  ""
-            else movieHeadline.text =  "Özet"
+            if(movie.tagline == "") movieTagline.visibility = View.GONE
+            if(movie.overview == "")  movieHeadline.visibility = View.GONE
+            else movieHeadline.text =  "Overview"
             movieMembers.text = "Members\nVote"
             movieActors.text = "Cast"
         }

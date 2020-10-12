@@ -12,7 +12,9 @@ import com.hazarbelge.themoviedb.dto.Cast
 import com.hazarbelge.themoviedb.dto.Crew
 import com.hazarbelge.themoviedb.dto.Movie
 import com.hazarbelge.themoviedb.network.ApiInterface
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_profile.*
+import kotlinx.android.synthetic.main.activity_profile.toolbar
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,6 +24,7 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
         setSupportActionBar(toolbar)
+        toolbar.minimumHeight = toolbar.height
         toolbar.setNavigationIcon(R.drawable.ic_menu)
 
         val position = intent.getStringExtra("movieid")

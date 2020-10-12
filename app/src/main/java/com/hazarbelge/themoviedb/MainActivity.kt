@@ -9,6 +9,7 @@ import com.hazarbelge.themoviedb.adapter.RecyclerAdapter
 import com.hazarbelge.themoviedb.dto.Movies
 import com.hazarbelge.themoviedb.network.ApiInterface
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.toolbar
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         title = ""
+        toolbar.minimumHeight = toolbar.height
         toolbar.setNavigationIcon(R.drawable.ic_menu)
 
         val string: String = getString(R.string.language)
