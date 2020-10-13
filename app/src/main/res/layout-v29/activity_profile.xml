@@ -22,7 +22,7 @@
             android:id="@+id/relativeProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorDarkRelative"
+            android:background="@color/colorRelative"
             android:orientation="vertical"
             tools:ignore="MissingConstraints">
 
@@ -70,7 +70,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/profile_title"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="0dp">
+                android:layout_marginTop="0dp"
+                android:forceDarkAllowed="false">
 
                 <TextView
                     android:id="@+id/profile_members"

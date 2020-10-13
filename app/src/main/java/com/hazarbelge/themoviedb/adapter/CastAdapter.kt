@@ -12,9 +12,10 @@ import com.bumptech.glide.request.RequestOptions
 import com.hazarbelge.themoviedb.R
 import com.hazarbelge.themoviedb.dto.Actor
 
+/*This class is a copy of RecyclerAdapter. There are few things that were changed. Layout's id, views' ids and its data class.*/
 class CastAdapter(private val context: Context) : RecyclerView.Adapter<CastAdapter.ViewCastHolder>() {
 
-    var actorList : List<Actor> = listOf()
+    private var actorList : List<Actor> = listOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewCastHolder {
 
@@ -30,7 +31,7 @@ class CastAdapter(private val context: Context) : RecyclerView.Adapter<CastAdapt
 
         holder.tvActorCharacter.text = actorList[position].character
         holder.tvActorName.text = actorList[position].name
-        Glide.with(context).load("https://image.tmdb.org/t/p/w220_and_h330_face/" + actorList.get(position).profile_path)
+        Glide.with(context).load(context.getString(R.string.w220h330) + actorList[position].profile_path)
             .apply(RequestOptions().centerCrop())
             .into(holder.profile_path)
     }
@@ -45,6 +46,5 @@ class CastAdapter(private val context: Context) : RecyclerView.Adapter<CastAdapt
         val profile_path: ImageView = itemView.findViewById(R.id.profile_path)
         val tvActorCharacter: TextView = itemView.findViewById(R.id.character)
         val tvActorName: TextView = itemView.findViewById(R.id.name)
-
     }
 }

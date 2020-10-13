@@ -12,10 +12,10 @@
         android:roundIcon="@mipmap/ic_appicon_round"
         android:theme="@style/AppTheme"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:ignore="UnusedAttribute">
         <activity android:name=".ProfileActivity"
-            android:parentActivityName=".MainActivity"
-            android:label="">
+            android:parentActivityName=".MainActivity">
         </activity>
         <activity android:name=".MainActivity">
             <intent-filter>

@@ -12,7 +12,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="65dp"
-        android:background="#032541"
+        android:background="@color/colorBackground"
         app:buttonGravity="center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +27,6 @@
             android:contentDescription="@string/imagecontent"
             android:cropToPadding="true"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_logo"
             tools:layout_editor_absoluteX="16dp" />
     </androidx.appcompat.widget.Toolbar>
 

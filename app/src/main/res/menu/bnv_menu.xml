@@ -2,27 +2,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:title="Menu"
+        android:title=""
         android:icon="@drawable/ic_bnv_menu"
         android:id="@+id/menuBNV">
     </item>
 
     <item
-        android:title="Favourite"
+        android:title=""
         android:icon="@drawable/ic_bnv_fav"
         android:id="@+id/favBNV">
     </item>
 
     <item
-        android:title="Bookmark"
+        android:title=""
         android:icon="@drawable/ic_bnv_bookmark"
         android:id="@+id/bookmarkBNV">
     </item>
 
     <item
-        android:title="Stars"
+        android:title=""
         android:icon="@drawable/ic_bnv_star"
         android:id="@+id/starBNV">
     </item>
-
 </menu>

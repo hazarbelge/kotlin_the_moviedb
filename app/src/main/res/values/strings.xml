@@ -4,4 +4,12 @@
     <string name="language">tr</string>
     <string name="region">tr</string>
     <string name="imagecontent">image</string>
+    <string name="overview">Özet</string>
+    <string name="now_playing">Gösterimdeki Filmler</string>
+    <string name="members_vote">Üye\nPuanları</string>
+    <string name="cast">Başroldeki Oyuncular</string>
+    <string name="w220h330">https://image.tmdb.org/t/p/w220_and_h330_face/</string>
+    <string name="w533h300">https://image.tmdb.org/t/p/w533_and_h300_bestv2/</string>
+    <string name="w600h900">https://image.tmdb.org/t/p/w600_and_h900_bestv2/</string>
+
 </resources>
