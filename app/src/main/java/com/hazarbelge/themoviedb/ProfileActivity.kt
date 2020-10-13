@@ -28,8 +28,10 @@ class ProfileActivity : AppCompatActivity() {
         toolbar.minimumHeight = toolbar.height
         toolbar.setNavigationIcon(R.drawable.ic_menu)
 
-        /*When this activity is created, a string which contains an id of the item comes with intent. Then, we send this string to our methods
-        * to process about this item.*/
+        /**
+         * When this activity is created, a string which contains an id of the item comes with intent. Then, we send this string
+         * to our methods to determine the item and process with it.
+         */
         val position = intent.getStringExtra("movieid")
         networkHandlerProfile(position!!)
         recyclerViewHandler(position)
@@ -41,9 +43,11 @@ class ProfileActivity : AppCompatActivity() {
         return true
     }
 
-    /*To use retrofit, to bind the response's contains and the views, we need an adapter. This time there is no RecyclerView and we can't use its
-    * adapter. So we created a class called "ProfileAdapter" and it binds the views and sets their text, image or etc. In this method we create a
-    * request and an object that belongs ProfileAdapter Class. The method inside this class will handle this. */
+    /**
+     * To use retrofit, to bind the response's contains and the views, we need an adapter. This time there is no RecyclerView and we can't use its
+     * adapter. So we created a class called "ProfileAdapter" and it binds the views and sets their text, image or etc. In this method we create a
+     * request and an object that belongs ProfileAdapter Class. The method inside this class will handle this.
+     */
     private fun networkHandlerProfile(movieID: String) {
 
         val apiInterface = ApiInterface.create().getProfiles(movieID, getString(R.string.api_key), getString(
@@ -63,17 +67,23 @@ class ProfileActivity : AppCompatActivity() {
 
     }
 
-    /*Generally same method with the method called recyclerViewHandler in "MainActivity". Two different things exist. Another RecyclerView and
-    * the method that we'll use from the interface. */
+    /**
+     * Generally same method with the method called recyclerViewHandler in "MainActivity". Two different things exist. Another RecyclerView and
+     * the method that we'll use from the interface.
+     */
     private fun recyclerViewHandler(movieID: String) {
 
         val recyclerView: RecyclerView = findViewById(R.id.recyclerStars)
         val recyclerAdapter = CastAdapter(this)
-        /*The cast will be shown horizontally. Because of that our recyclerview's layoutManager orientation will be horizontal.  */
+        /**
+         * The cast will be shown horizontally. Because of that our recyclerview's layoutManager orientation will be horizontal.
+         */
         recyclerStars.layoutManager = LinearLayoutManager(this,RecyclerView.HORIZONTAL,false)
         recyclerView.adapter = recyclerAdapter
 
-        /*Like getMovie method that we used in MainActivity. But now, we send the movieID inside it to take endpoints of the specific movie.*/
+        /**
+         *Like getMovie method that we used in MainActivity. But now, we send the movieID inside it to take endpoints of the specific movie.
+         */
         val apiInterface = ApiInterface.create().getCast(movieID, getString(R.string.api_key), getString(R.string.language))
 
         apiInterface.enqueue(object : Callback<Cast> {
@@ -101,12 +111,16 @@ class ProfileActivity : AppCompatActivity() {
         })
     }
 
-    /*The binding process is happening in this method. In the layout there are 4 TextView and we'll set their text from here. */
+    /**
+     * The binding process is happening in this method. In the layout there are 4 TextView and we'll set their text from here.
+     */
     private fun responseHandlerCrew(crew: Crew){
         val screenplay: TextView = findViewById(R.id.screenplay)
         val director: TextView = findViewById(R.id.director)
 
-        /*It searches the "job" endpoint to determine the director and the screen writer. When it finds, it sets the texts. */
+        /**
+         * It searches the "job" endpoint to determine the director and the screen writer. When it finds, it sets the texts.
+         */
         for(element in crew.crew) {
             if(element.job == "Director") {
                 director.text = element.name

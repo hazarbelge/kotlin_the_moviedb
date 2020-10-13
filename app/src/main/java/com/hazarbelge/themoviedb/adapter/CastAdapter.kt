@@ -12,7 +12,9 @@ import com.bumptech.glide.request.RequestOptions
 import com.hazarbelge.themoviedb.R
 import com.hazarbelge.themoviedb.dto.Actor
 
-/*This class is a copy of RecyclerAdapter. There are few things that were changed. Layout's id, views' ids and its data class.*/
+/**
+ * This class is a copy of RecyclerAdapter. There are few things that were changed. Layout's id, views' ids and its data class.
+ */
 class CastAdapter(private val context: Context) : RecyclerView.Adapter<CastAdapter.ViewCastHolder>() {
 
     private var actorList : List<Actor> = listOf()

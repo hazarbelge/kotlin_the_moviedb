@@ -14,8 +14,10 @@ import kotlinx.android.synthetic.main.activity_profile.view.*
 
 class ProfileAdapter(){
 
-    /* This method takes 3 parameters: "movie" parameter is response's contains, "view" is our ScrollView and there is context which is our activity.
-     * We take the contains of response in here and the responseHandler method binds the views and sets their text, image or edit the ProgressBar. */
+    /**
+     * This method takes 3 parameters: "movie" parameter is response's contains, "view" is our ScrollView and there is context which is our activity.
+     * We take the contains of response in here and the responseHandler method binds the views and sets their text, image or edit the ProgressBar.
+     */
     fun responseHandler(movie: Movie, view: View, context: Context){
 
         val movieName: TextView = view.findViewById(R.id.profile_title)
@@ -32,8 +34,10 @@ class ProfileAdapter(){
         val movieActors: TextView = view.findViewById(R.id.profile_stars)
         val movieProgress: ProgressBar = view.findViewById(R.id.progressBar)
 
-        /*Formatting the release date in pattern of "dd/MM/yyyy" and next to it where it was produced. To keep the minimum api low localdate or formatter
-        * is not used. (they require min api 26)*/
+        /**
+         * Formatting the release date in pattern of "dd/MM/yyyy" and next to it where it was produced. To keep the minimum api low localdate or formatter
+         * is not used. (they require min api 26)
+         */
         var date = movie.release_date
         val date_year = date.removeRange(4,date.length)
         var date_month = date.removeRange(0,5)
@@ -42,7 +46,9 @@ class ProfileAdapter(){
         date = "$date_day/$date_month/$date_year" + " (${movie.production_countries[0]["iso_3166_1"]})"
         movieDate.text = date
 
-        /*The title text has 2 different color. So, we use Html.fromHtml to determine the colors.*/
+        /**
+         * The title text has 2 different color. So, we use Html.fromHtml to determine the colors.
+         */
         val text = "<font color=#ffffff>${movie.title}</font> <font color=#cce0e3>(${movie.release_date.removeRange(4,movie.release_date.length)})</font>"
         movieName.text = Html.fromHtml(text)
 
@@ -50,7 +56,9 @@ class ProfileAdapter(){
         for(element in movie.genres) genres += "${element["name"]}, "
         movieGenres.text = genres!!.substring(0, genres.length-2) //Deleting the last 2 characters of string is necessary, because they are "," and " "
 
-        /*Formatting the runtime in pattern of "(int)h(int)m"*/
+        /**
+         * Formatting the runtime in pattern of "(int)h(int)m"
+         */
         val runtime_str = "${movie.runtime.toInt()/60}h ${movie.runtime.toInt()%60}m"
         if(movie.runtime.toInt() >= 60) movieRuntime.text = runtime_str
         else movieRuntime.text = movie.runtime
@@ -58,8 +66,10 @@ class ProfileAdapter(){
         movieTagline.text = movie.tagline
         movieOverview.text = movie.overview
 
-        /*If there are no tagline or overview, they must be disappear. When they not, there is a huge amounts of space. That's why when they are not
-        * exists, we set their visibility to View.GONE*/
+        /**
+         * If there are no tagline or overview, they must be disappear. When they not, there is a huge amounts of space. That's why when they are not
+         * exists, we set their visibility to View.GONE
+         */
         if(movie.tagline == "") movieTagline.visibility = View.GONE
         if(movie.overview == "") movieHeadline.visibility = View.GONE
         else movieHeadline.text = context.getString(R.string.overview) //We want the headline "Özet" exists if there is a overview.
