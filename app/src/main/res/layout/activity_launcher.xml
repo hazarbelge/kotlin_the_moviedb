@@ -9,7 +9,7 @@
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#E6000000"
+        android:background="@color/colorLayoutBackground"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="-160dp" />
 

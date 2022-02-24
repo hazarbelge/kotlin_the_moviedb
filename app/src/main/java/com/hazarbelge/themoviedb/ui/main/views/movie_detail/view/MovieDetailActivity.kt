@@ -1,14 +1,12 @@
 package com.hazarbelge.themoviedb.ui.main.views.movie_detail.view
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Html
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.hazarbelge.themoviedb.R
 import com.hazarbelge.themoviedb.base.BaseActivity
 import com.hazarbelge.themoviedb.common.ItemClickListener
@@ -31,8 +29,14 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie_detail)
         setSupportActionBar(binding.topNavBar.toolbar)
+
+        binding.topNavBar.apply {
+            title = ""
+            returnImageView.setOnClickListener {
+                onBackPressed()
+            }
+        }
 
         val position = intent.getStringExtra("movieid")
         getMovie(position!!)
@@ -86,17 +90,18 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
     }
 
     private fun responseHandlerCrew(crew: Crew) {
-        val screenplay: TextView = findViewById(R.id.screenplay)
-        val director: TextView = findViewById(R.id.director)
-
         for (element in crew.crew) {
             if (element.job == "Director") {
-                director.text = element.name
+                binding.director.apply {
+                    text = element.name
+                }
                 binding.directorText.apply {
                     text = element.job
                 }
             } else if (element.job == "Screenplay") {
-                screenplay.text = element.name
+                binding.screenplay.apply {
+                    text = element.name
+                }
                 binding.screenplayText.apply {
                     text = element.job
                 }
@@ -187,29 +192,27 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
             progress = (movie.vote_average * 10).toInt()
         }
 
-        val progressStr: String = binding.progressBar.progress.toString() + "%" //In ProgressBar we have a TextView that shows us the progress and we set that text with % sign
+        val progressStr: String = binding.progressBar.progress.toString() + "%"
 
         binding.progressText.apply {
             text = progressStr
         }
 
-        if (movie.status == "Released") binding.movieStatus.setImageResource(R.drawable.ic_released) //If the movie's status is "Released", it shows the drawable "R" next to the released date.
+        if (movie.status == "Released") binding.movieStatus.setImageResource(R.drawable.ic_released)
 
-        binding.poster.apply {
-            scaleType = ImageView.ScaleType.CENTER_CROP
-            load(context.getString(R.string.w600h900) + movie.poster_path)
-        }
+        Glide.with(this@MovieDetailActivity).load(this@MovieDetailActivity.getString(R.string.w600h900) + movie.poster_path)
+            .apply(RequestOptions().centerCrop())
+            .into(binding.poster)
 
-        binding.bgPoster.apply {
-            scaleType = ImageView.ScaleType.CENTER_CROP
-            load(context.getString(R.string.w600h900) + movie.backdrop_path)
-        }
+        Glide.with(this@MovieDetailActivity).load(this@MovieDetailActivity.getString(R.string.w600h900) + movie.backdrop_path)
+            .apply(RequestOptions().centerCrop())
+            .into(binding.bgPoster)
     }
 
 
     override fun onItemClicked(v: View, data: Actor) {
-        val intent = Intent(this@MovieDetailActivity, MovieDetailActivity::class.java)
-        intent.putExtra("movieid", data.id)
-        startActivity(intent)
+        /*val intent = Intent(this@MovieDetailActivity, ActorDetailActivity::class.java)
+        intent.putExtra("actorid", data.id)
+        startActivity(intent)*/
     }
 }

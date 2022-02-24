@@ -6,4 +6,6 @@
     <color name="colorBackground">#032541</color>
     <color name="colorDarkRelative">#0E606F</color>
     <color name="colorRelative">#146E7E</color>
+    <color name="colorCardBackground">#494949</color>
+    <color name="colorLayoutBackground">#E6000000</color>
 </resources>

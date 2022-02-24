@@ -1,6 +1,7 @@
 package com.hazarbelge.themoviedb.ui.main.views.home.view
 
 import android.os.Bundle
+import android.view.View
 
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.ORIENTATION_HORIZONTAL
@@ -23,8 +24,13 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>() {
         super.onCreate(savedInstanceState)
         setupViewPager()
         setupBottomNavigationView()
-        setSupportActionBar(binding.topNavBar.toolbar).apply { title = "" }
+        setSupportActionBar(binding.topNavBar.toolbar)
         setOnclick()
+
+        binding.topNavBar.apply {
+            title = ""
+            returnImageView.visibility = View.GONE
+        }
     }
 
     private fun setOnclick() {

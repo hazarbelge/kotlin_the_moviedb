@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/relativeLayoutActor"
-    android:layout_width="200dp"
-    android:layout_height="310dp"
+    android:layout_width="170dp"
+    android:layout_height="330dp"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewActor"
-        android:layout_width="200dp"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
@@ -17,7 +18,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="20dp"
-        android:foregroundGravity="center_horizontal">
+        android:foregroundGravity="center_horizontal"
+        app:cardBackgroundColor="@color/colorCardBackground">
 
         <RelativeLayout
             android:id="@+id/relativelayoutActor"
@@ -36,8 +38,10 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="false"
                 android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
                 android:textAlignment="textStart"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="14sp"
                 android:textStyle="normal" />
 
@@ -45,28 +49,27 @@
                 android:id="@+id/name"
                 android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/profile_path"
+                android:layout_below="@+id/profilePath"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="false"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="-80dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
                 android:textAlignment="textStart"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/profile_path"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:id="@+id/profilePath"
+                android:layout_width="wrap_content"
+                android:layout_height="190dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="0dp"
-                android:layout_marginBottom="90dp"
                 android:contentDescription="@string/image_content" />
 
         </RelativeLayout>

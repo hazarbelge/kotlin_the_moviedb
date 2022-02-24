@@ -9,6 +9,8 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.hazarbelge.themoviedb.R
 import com.hazarbelge.themoviedb.common.ItemClickListener
 import com.hazarbelge.themoviedb.network.model.Movie
@@ -76,6 +78,10 @@ class NowPlayingAdapter(
             scaleType = ImageView.ScaleType.CENTER_CROP
             load(context.getString(R.string.w220h330) + movie.poster_path)
         }
+
+        Glide.with(viewHolder.posterPath.context).load(viewHolder.posterPath.context.getString(R.string.w220h330) + movie.poster_path)
+            .apply(RequestOptions().centerCrop())
+            .into(viewHolder.posterPath)
 
         viewHolder.cardView.setOnClickListener {
             callback.onItemClicked(

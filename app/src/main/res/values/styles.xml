@@ -8,4 +8,8 @@
 
         <item name="windowNoTitle">true</item>
     </style>
+
+    <style name="ActionBar" parent="Base.ThemeOverlay.AppCompat.ActionBar">
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>

@@ -18,14 +18,11 @@ class LauncherActivity : BaseActivity<LauncherViewModel, ActivityLauncherBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_launcher)
         setOnClicks()
     }
 
     private fun setOnClicks() {
-        val movieButton = findViewById<MaterialButton>(R.id.movieButton)
-
-        movieButton.setOnClickListener {
+        binding.movieButton.setOnClickListener {
             startActivity(HOME_ACTIVITY_PACKAGE_PATH)
         }
     }

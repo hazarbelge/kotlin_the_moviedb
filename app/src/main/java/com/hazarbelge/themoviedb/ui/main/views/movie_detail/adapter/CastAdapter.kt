@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.hazarbelge.themoviedb.R
 import com.hazarbelge.themoviedb.common.ItemClickListener
 import com.hazarbelge.themoviedb.network.model.Actor
@@ -40,10 +42,9 @@ class CastAdapter(
             text = actor.name
         }
 
-        viewHolder.profilePath.apply {
-            scaleType = ImageView.ScaleType.CENTER_CROP
-            load(context.getString(R.string.w220h330) + actor.profile_path)
-        }
+        Glide.with(viewHolder.profilePath.context).load(viewHolder.profilePath.context.getString(R.string.w220h330) + actor.profile_path)
+            .apply(RequestOptions().centerCrop())
+            .into(viewHolder.profilePath)
 
         viewHolder.cardViewActor.setOnClickListener {
             callback.onItemClicked(
@@ -56,7 +57,7 @@ class CastAdapter(
 
     inner class CastViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val cardViewActor: CardView = itemView.findViewById(R.id.cardViewActor)
-        val profilePath: ImageView = itemView.findViewById(R.id.profile_path)
+        val profilePath: ImageView = itemView.findViewById(R.id.profilePath)
         val tvActorCharacter: TextView = itemView.findViewById(R.id.character)
         val tvActorName: TextView = itemView.findViewById(R.id.name)
     }
