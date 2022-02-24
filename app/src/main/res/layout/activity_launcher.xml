@@ -32,7 +32,7 @@
         android:layout_height="60dp"
         android:backgroundTint="@color/colorBackground"
         android:text="@string/movies"
-        android:textColor="#D1C4E9"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

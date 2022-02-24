@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.hazarbelge.themoviedb.R
 import com.hazarbelge.themoviedb.common.ItemClickListener
+import com.hazarbelge.themoviedb.network.LANGUAGE
 import com.hazarbelge.themoviedb.network.model.Movie
 import java.time.LocalDate
 import java.time.format.TextStyle
@@ -42,7 +43,7 @@ class TopRatedAdapter(
         if (VERSION.SDK_INT >= VERSION_CODES.O) {
             val date = LocalDate.parse(movie.release_date)
             val dateStr = "${
-                date.month.getDisplayName(TextStyle.FULL, Locale("tr"))
+                date.month.getDisplayName(TextStyle.FULL, Locale(LANGUAGE))
             } ${date.dayOfMonth}, ${date.year}"
 
             viewHolder.movieReleaseDate.apply {

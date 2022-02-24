@@ -98,11 +98,6 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
     }
 
     private fun movieDetailResponseHandler(movie: Movie) {
-
-        /**
-         * Formatting the release date in pattern of "dd/MM/yyyy" and next to it where it was produced. To keep the minimum api low localdate or formatter
-         * is not used. (they require min api 26)
-         */
         if(movie.release_date.isNotEmpty()) {
             var date = movie.release_date
             val dateYear = date.removeRange(4, date.length)
@@ -138,9 +133,6 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
             text = genres!!.substring(0, genres.length - 2)
         }
 
-        /**
-         * Formatting the runtime in pattern of "(int)h(int)m"
-         */
         val runtimeStr = "${movie.runtime.toInt() / 60}h ${movie.runtime.toInt() % 60}m"
         if (movie.runtime.toInt() >= 60) {
             binding.movieRuntime.apply {
@@ -152,20 +144,18 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
             }
         }
 
-        binding.movieTagline.apply {
-            text = movie.tagline
-        }
-
         binding.movieOverview.apply {
             text = movie.overview
         }
 
-        /**
-         * If there are no tagline or overview, they must be disappear. When they not, there is a huge amounts of space. That's why when they are not
-         * exists, we set their visibility to View.GONE
-         */
-        if (movie.tagline == "") binding.movieTagline.visibility = View.GONE
-        if (movie.overview == "") binding.movieHeadline.visibility = View.GONE
+        if (movie.tagline.isEmpty()) binding.movieTagline.visibility = View.GONE
+        else {
+            binding.movieTagline.apply {
+                text = movie.tagline
+            }
+        }
+
+        if (movie.overview.isEmpty()) binding.movieHeadline.visibility = View.GONE
         else {
             binding.movieHeadline.apply {
                 text = context.getString(R.string.overview)

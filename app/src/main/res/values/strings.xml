@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">TheMovieDB</string>
     <string name="image_content">imageContent</string>
-    <string name="overview">Özet</string>
+    <string name="overview">Overview</string>
     <string name="movies">Movies</string>
     <string name="latest">Latest Movie</string>
     <string name="now_playing">Now Playing Movies</string>
