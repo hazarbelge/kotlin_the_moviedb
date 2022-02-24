@@ -31,7 +31,7 @@
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:backgroundTint="@color/colorBackground"
-        android:text="@string/now_playing"
+        android:text="@string/movies"
         android:textColor="#D1C4E9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

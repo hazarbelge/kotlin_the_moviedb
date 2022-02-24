@@ -3,8 +3,8 @@ package com.hazarbelge.themoviedb.network.dependency_injection
 import com.hazarbelge.themoviedb.network.interceptor.HeaderInterceptor
 import com.hazarbelge.themoviedb.network.repository.IMovieDBRepository
 import com.hazarbelge.themoviedb.network.repository.MovieDBRepository
-import com.hazarbelge.themoviedb.network.utils.UrlUtils
 import com.hazarbelge.themoviedb.network.MovieDBService
+import com.hazarbelge.themoviedb.network.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -26,8 +26,7 @@ val networkModule = module {
             .build()
     }
     single {
-        val ut = UrlUtils()
-        val baseURL = ut.baseUrl
+        val baseURL = BASE_URL
 
         val retrofit = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())

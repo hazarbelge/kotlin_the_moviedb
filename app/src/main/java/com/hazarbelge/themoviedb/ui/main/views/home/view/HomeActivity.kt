@@ -12,7 +12,11 @@ import com.hazarbelge.themoviedb.base.BaseActivity
 import com.hazarbelge.themoviedb.databinding.ActivityHomeBinding
 import com.hazarbelge.themoviedb.databinding.LayoutBottomNavBarBinding
 import com.hazarbelge.themoviedb.ui.main.views.home.adapter.HomeViewPagerAdapter
+import com.hazarbelge.themoviedb.ui.main.views.latest.view.LatestFragment
 import com.hazarbelge.themoviedb.ui.main.views.now_playing.view.NowPlayingFragment
+import com.hazarbelge.themoviedb.ui.main.views.popular.view.PopularFragment
+import com.hazarbelge.themoviedb.ui.main.views.top_rated.view.TopRatedFragment
+import com.hazarbelge.themoviedb.ui.main.views.upcoming.view.UpcomingFragment
 
 class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>() {
 
@@ -44,10 +48,9 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>() {
                 this@HomeActivity,
                 listOf(
                     NowPlayingFragment.newInstance(),
-                    NowPlayingFragment.newInstance(),
-                    NowPlayingFragment.newInstance(),
-                    NowPlayingFragment.newInstance(),
-                    NowPlayingFragment.newInstance()
+                    PopularFragment.newInstance(),
+                    TopRatedFragment.newInstance(),
+                    UpcomingFragment.newInstance()
                 )
             )
             viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -66,21 +69,17 @@ class HomeActivity : BaseActivity<HomeViewModel, ActivityHomeBinding>() {
                     binding.viewPager.currentItem = 0
                     true
                 }
-                R.id.action_now_playing1 -> {
+                R.id.action_popular -> {
                     binding.viewPager.currentItem = 1
                     true
                 }
-                R.id.action_now_playing2 -> {
+                R.id.action_top_rated -> {
                     binding.viewPager.currentItem = 2
                     true
                 }
-                R.id.action_now_playing3 -> {
-                    binding.viewPager.currentItem = 3
-                    true
-                }
 
-                R.id.action_now_playing4 -> {
-                    binding.viewPager.currentItem = 4
+                R.id.action_upcoming -> {
+                    binding.viewPager.currentItem = 3
                     true
                 }
                 else -> false

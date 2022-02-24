@@ -2,41 +2,32 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-
     <item
         android:id="@+id/action_now_playing"
         android:enabled="true"
         android:icon="@drawable/ic_logo"
         android:title="@string/bottom_nav_now_playing"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="withText" />
 
     <item
-        android:id="@+id/action_now_playing1"
+        android:id="@+id/action_popular"
         android:enabled="true"
         android:icon="@drawable/ic_logo"
-        android:title="@string/bottom_nav_now_playing"
-        app:showAsAction="ifRoom" />
+        android:title="@string/bottom_nav_popular"
+        app:showAsAction="withText" />
 
     <item
-        android:id="@+id/action_now_playing2"
+        android:id="@+id/action_top_rated"
         android:enabled="true"
         android:icon="@drawable/ic_logo"
-        android:title="@string/bottom_nav_now_playing"
-        app:showAsAction="ifRoom" />
+        android:title="@string/bottom_nav_top_rated"
+        app:showAsAction="withText" />
 
     <item
-        android:id="@+id/action_now_playing3"
+        android:id="@+id/action_upcoming"
         android:enabled="true"
         android:icon="@drawable/ic_logo"
-        android:title="@string/bottom_nav_now_playing"
-        app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/action_now_playing4"
-        android:enabled="true"
-        android:icon="@drawable/ic_logo"
-        app:showAsAction="ifRoom"
-        android:title="@string/bottom_nav_now_playing" />
+        app:showAsAction="withText"
+        android:title="@string/bottom_nav_upcoming" />
 
 </menu>

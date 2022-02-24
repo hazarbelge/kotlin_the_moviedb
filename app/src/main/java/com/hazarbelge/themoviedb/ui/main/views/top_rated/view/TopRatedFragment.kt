@@ -1,39 +1,40 @@
-package com.hazarbelge.themoviedb.ui.main.views.now_playing.view
+package com.hazarbelge.themoviedb.ui.main.views.top_rated.view
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hazarbelge.themoviedb.R
+import com.hazarbelge.themoviedb.ui.main.views.top_rated.adapter.TopRatedAdapter
+import com.hazarbelge.themoviedb.ui.main.views.top_rated.viewmodel.TopRatedViewModel
 import com.hazarbelge.themoviedb.base.BaseFragment
 import com.hazarbelge.themoviedb.common.ItemClickListener
-import com.hazarbelge.themoviedb.databinding.FragmentNowPlayingBinding
+import com.hazarbelge.themoviedb.databinding.FragmentTopRatedBinding
 import com.hazarbelge.themoviedb.ui.main.views.movie_detail.view.MovieDetailActivity
 import com.hazarbelge.themoviedb.network.model.Movie
 import com.hazarbelge.themoviedb.network.model.Result
-import com.hazarbelge.themoviedb.ui.main.views.now_playing.adapter.NowPlayingAdapter
-import com.hazarbelge.themoviedb.ui.main.views.now_playing.viewmodel.NowPlayingViewModel
+import com.hazarbelge.themoviedb.ui.main.views.top_rated.view.TopRatedFragment
 
-class NowPlayingFragment : BaseFragment<NowPlayingViewModel, FragmentNowPlayingBinding>(),
+class TopRatedFragment : BaseFragment<TopRatedViewModel, FragmentTopRatedBinding>(),
     ItemClickListener<Movie> {
 
-    override val binding: FragmentNowPlayingBinding by lazy {
-        FragmentNowPlayingBinding.inflate(
+    override val binding: FragmentTopRatedBinding by lazy {
+        FragmentTopRatedBinding.inflate(
             layoutInflater
         )
     }
 
     companion object {
-        fun newInstance() = NowPlayingFragment()
+        fun newInstance() = TopRatedFragment()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.getNowPlayingMovies().observe(viewLifecycleOwner) {
+        viewModel.getTopRatedMovies().observe(viewLifecycleOwner) {
             if (it is Result.Success && it.data.results != null) {
                 println("succes: $it")
-                val recyclerAdapter = NowPlayingAdapter(this, it.data.results)
+                val recyclerAdapter = TopRatedAdapter(this, it.data.results)
                 binding.recyclerview.apply {
                     layoutManager = LinearLayoutManager(context)
                     adapter = recyclerAdapter
@@ -44,7 +45,7 @@ class NowPlayingFragment : BaseFragment<NowPlayingViewModel, FragmentNowPlayingB
         }
 
         binding.tView.apply {
-            text = getString(R.string.now_playing)
+            text = getString(R.string.top_rated)
         }
     }
 

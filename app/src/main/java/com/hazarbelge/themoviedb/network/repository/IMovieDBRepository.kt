@@ -7,8 +7,12 @@ import com.hazarbelge.themoviedb.network.model.Movies
 import com.hazarbelge.themoviedb.network.model.Result
 
 interface IMovieDBRepository {
-    suspend fun getMovies(key: String, language: String) : Result<Movies>
-    suspend fun getMovieById(movieID: String?, key: String, language: String) : Result<Movie>
-    suspend fun getCast(movieID: String?, key: String, language: String) : Result<Cast>
-    suspend fun getCrew(movieID: String?, key: String, language: String) : Result<Crew>
+    suspend fun getLatestMovie() : Result<Movie>
+    suspend fun getNowPlayingMovies() : Result<Movies>
+    suspend fun getPopularMovies() : Result<Movies>
+    suspend fun getTopRatedMovies() : Result<Movies>
+    suspend fun getUpcomingMovies() : Result<Movies>
+    suspend fun getMovieById(movieID: String) : Result<Movie>
+    suspend fun getCast(movieID: String) : Result<Cast>
+    suspend fun getCrew(movieID: String) : Result<Crew>
 }

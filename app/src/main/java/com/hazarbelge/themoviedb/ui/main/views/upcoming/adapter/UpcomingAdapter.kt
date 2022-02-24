@@ -1,4 +1,4 @@
-package com.hazarbelge.themoviedb.ui.main.views.now_playing.adapter
+package com.hazarbelge.themoviedb.ui.main.views.upcoming.adapter
 
 import android.os.Build.*
 import android.view.LayoutInflater
@@ -8,7 +8,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.hazarbelge.themoviedb.R
@@ -18,23 +17,23 @@ import java.time.LocalDate
 import java.time.format.TextStyle
 import java.util.*
 
-class NowPlayingAdapter(
+class UpcomingAdapter(
     private var callback: ItemClickListener<Movie>,
     private val movieList: List<Movie>,
-) : RecyclerView.Adapter<NowPlayingAdapter.NowPlayingViewHolder>() {
+) : RecyclerView.Adapter<UpcomingAdapter.UpcomingViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): NowPlayingAdapter.NowPlayingViewHolder {
+    ): UpcomingViewHolder {
         val inflate = LayoutInflater.from(parent.context).inflate(R.layout.movie_items, null)
-        return NowPlayingViewHolder(inflate)
+        return UpcomingViewHolder(inflate)
     }
 
     override fun getItemCount(): Int = movieList.size
 
     override fun onBindViewHolder(
-        viewHolder: NowPlayingAdapter.NowPlayingViewHolder,
+        viewHolder: UpcomingViewHolder,
         position: Int
     ) {
         val movie: Movie = movieList[position]
@@ -69,9 +68,8 @@ class NowPlayingAdapter(
             text = movie.overview
         }
 
-        if (movie.poster_path != null) {
-            Glide.with(viewHolder.posterPath.context)
-                .load(viewHolder.posterPath.context.getString(R.string.w220h330) + movie.poster_path)
+        if(movie.poster_path != null) {
+            Glide.with(viewHolder.posterPath.context).load(viewHolder.posterPath.context.getString(R.string.w220h330) + movie.poster_path)
                 .apply(RequestOptions().centerCrop())
                 .into(viewHolder.posterPath)
         }
@@ -84,7 +82,7 @@ class NowPlayingAdapter(
         }
     }
 
-    inner class NowPlayingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class UpcomingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val cardView: CardView = itemView.findViewById(R.id.cardView)
         val movieName: TextView = itemView.findViewById(R.id.title)
         val posterPath: ImageView = itemView.findViewById(R.id.poster_path)

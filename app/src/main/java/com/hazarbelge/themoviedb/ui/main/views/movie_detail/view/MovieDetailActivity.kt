@@ -45,11 +45,7 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
     }
 
     private fun getMovie(movieID: String) {
-        viewModel.getMovieById(
-            movieID,
-            getString(R.string.api_key),
-            getString(R.string.language),
-        ).observe(this) {
+        viewModel.getMovieById(movieID).observe(this) {
             if (it is Result.Success) {
                 movieDetailResponseHandler(it.data)
             }
@@ -57,11 +53,7 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
     }
 
     private fun getCast(movieID: String) {
-        viewModel.getCast(
-            movieID,
-            getString(R.string.api_key),
-            getString(R.string.language),
-        ).observe(this) {
+        viewModel.getCast(movieID).observe(this) {
             if (it is Result.Success) {
                 val recyclerAdapter = CastAdapter(this, it.data.cast)
 
@@ -78,11 +70,7 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
     }
 
     private fun getCrew(movieID: String) {
-        viewModel.getCrew(
-            movieID,
-            getString(R.string.api_key),
-            getString(R.string.language),
-        ).observe(this) {
+        viewModel.getCrew(movieID).observe(this) {
             if (it is Result.Success) {
                 responseHandlerCrew(it.data)
             }
@@ -115,29 +103,33 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
          * Formatting the release date in pattern of "dd/MM/yyyy" and next to it where it was produced. To keep the minimum api low localdate or formatter
          * is not used. (they require min api 26)
          */
-        var date = movie.release_date
-        val dateYear = date.removeRange(4, date.length)
-        var dateMonth = date.removeRange(0, 5)
-        dateMonth = dateMonth.removeRange(2, dateMonth.length)
-        val dateDay = date.removeRange(0, 8)
-        date = "$dateDay/$dateMonth/$dateYear" + " (${movie.production_countries[0]["iso_3166_1"]})"
+        if(movie.release_date.isNotEmpty()) {
+            var date = movie.release_date
+            val dateYear = date.removeRange(4, date.length)
+            var dateMonth = date.removeRange(0, 5)
+            dateMonth = dateMonth.removeRange(2, dateMonth.length)
+            val dateDay = date.removeRange(0, 8)
+            date =
+                "$dateDay/$dateMonth/$dateYear" + " (${movie.production_countries[0]["iso_3166_1"]})"
 
-        binding.movieReleaseDate.apply {
-            text = date
-        }
+            binding.movieReleaseDate.apply {
+                text = date
+            }
 
-        /**
-         * The title text has 2 different color. So, we use Html.fromHtml to determine the colors.
-         */
-        val htmlText = "<font color=#ffffff>${movie.title}</font> <font color=#cce0e3>(${
-            movie.release_date.removeRange(
-                4,
-                movie.release_date.length
-            )
-        })</font>"
+            val htmlText = "<font color=#ffffff>${movie.title}</font> <font color=#cce0e3>(${
+                movie.release_date.removeRange(
+                    4,
+                    movie.release_date.length
+                )
+            })</font>"
 
-        binding.movieTitle.apply {
-            text = Html.fromHtml(htmlText)
+            binding.movieTitle.apply {
+                text = Html.fromHtml(htmlText)
+            }
+        } else {
+            binding.movieTitle.apply {
+                text = movie.title
+            }
         }
 
         var genres: String? = ""

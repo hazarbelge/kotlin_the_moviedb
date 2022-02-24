@@ -5,7 +5,7 @@ import com.hazarbelge.themoviedb.network.repository.IMovieDBRepository
 import com.hazarbelge.themoviedb.base.BaseViewModel
 
 class NowPlayingViewModel(private val repository: IMovieDBRepository) : BaseViewModel() {
-    fun getMovies(key: String, language: String) = liveData {
-        emit(repository.getMovies(key, language))
+    fun getNowPlayingMovies() = liveData {
+        emit(repository.getNowPlayingMovies())
     }
 }
