@@ -3,7 +3,7 @@ package com.hazarbelge.themoviedb.network.dependency_injection
 import com.hazarbelge.themoviedb.network.interceptor.HeaderInterceptor
 import com.hazarbelge.themoviedb.network.repository.IMovieDBRepository
 import com.hazarbelge.themoviedb.network.repository.MovieDBRepository
-import com.hazarbelge.themoviedb.network.utils.UrlUtilities
+import com.hazarbelge.themoviedb.network.utils.UrlUtils
 import com.hazarbelge.themoviedb.network.MovieDBService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -26,7 +26,7 @@ val networkModule = module {
             .build()
     }
     single {
-        val ut = UrlUtilities()
+        val ut = UrlUtils()
         val baseURL = ut.baseUrl
 
         val retrofit = Retrofit.Builder()

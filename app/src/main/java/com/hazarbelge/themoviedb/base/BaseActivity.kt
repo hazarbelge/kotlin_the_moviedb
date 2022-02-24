@@ -9,7 +9,6 @@ import com.hazarbelge.themoviedb.common.getViewModelViaKoin
 import com.hazarbelge.themoviedb.common.ErrorUtils
 import java.lang.reflect.ParameterizedType
 
-
 abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatActivity() {
 
     private val errorUi by lazy { ErrorUtils(this) }

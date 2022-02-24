@@ -1,5 +1,5 @@
 package com.hazarbelge.themoviedb.network.utils
 
-class UrlUtilities {
+class UrlUtils {
     val baseUrl = "https://api.themoviedb.org/3/"
 }

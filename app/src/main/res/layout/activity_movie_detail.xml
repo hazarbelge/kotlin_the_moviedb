@@ -5,24 +5,31 @@
     android:id="@+id/vote_average"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileActivity">
+    tools:context=".ui.main.views.movie_detail.view.MovieDetailActivity">
+
+    <include
+        android:id="@+id/topNavBar"
+        layout="@layout/layout_top_nav_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:id="@+id/scrollview"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scrollbars="none"
-        app:layout_constraintBottom_toTopOf="@+id/bnView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/topNavBar">
 
 
         <RelativeLayout
             android:id="@+id/relativeProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorRelative"
+            android:background="@color/colorDarkRelative"
             android:orientation="vertical"
             tools:ignore="MissingConstraints">
 
@@ -34,7 +41,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="0dp"
-                android:contentDescription="@string/imagecontent"
+                android:contentDescription="@string/image_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,12 +53,12 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="35dp"
                 android:layout_marginTop="25dp"
-                android:contentDescription="@string/imagecontent"
-                app:layout_constraintBottom_toTopOf="@id/profile_title"
+                android:contentDescription="@string/image_content"
+                app:layout_constraintBottom_toTopOf="@id/movie_title"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/profile_title"
+                android:id="@+id/movie_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/bg_poster"
@@ -68,13 +75,12 @@
                 android:id="@+id/relativeVote"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/profile_title"
+                android:layout_below="@+id/movie_title"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="0dp"
-                android:forceDarkAllowed="false">
+                android:layout_marginTop="0dp">
 
                 <TextView
-                    android:id="@+id/profile_members"
+                    android:id="@+id/movie_members"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/progressBar"
@@ -115,7 +121,7 @@
 
 
             <TextView
-                android:id="@+id/profile_tagline"
+                android:id="@+id/movie_tagline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relativeInfo"
@@ -150,18 +156,18 @@
                     android:background="@color/colorDarkRelative">
 
                     <TextView
-                        android:id="@+id/profile_release_date"
+                        android:id="@+id/movie_release_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="10dp"
-                        android:layout_toEndOf="@+id/profile_status"
+                        android:layout_toEndOf="@+id/movie_status"
                         android:textColor="@android:color/white"
                         android:textSize="14sp"
                         android:textStyle="normal" />
 
                     <TextView
-                        android:id="@+id/profile_runtime"
+                        android:id="@+id/movie_runtime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="false"
@@ -180,25 +186,25 @@
                         android:layout_marginStart="2dp"
                         android:layout_marginTop="17dp"
                         android:layout_marginBottom="7dp"
-                        android:layout_toEndOf="@+id/profile_release_date"
-                        android:contentDescription="@string/imagecontent"
+                        android:layout_toEndOf="@+id/movie_release_date"
+                        android:contentDescription="@string/image_content"
                         app:srcCompat="@drawable/dot" />
 
                     <ImageView
-                        android:id="@+id/profile_status"
+                        android:id="@+id/movie_status"
                         android:layout_width="18dp"
                         android:layout_height="20dp"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/box"
-                        android:contentDescription="@string/imagecontent"
+                        android:contentDescription="@string/image_content"
                         android:padding="1dp" />
 
                 </RelativeLayout>
 
                 <TextView
-                    android:id="@+id/profile_genres"
+                    android:id="@+id/movie_genres"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/relativeInfoDeep"
@@ -213,10 +219,10 @@
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/profile_headline"
+                android:id="@+id/movie_headline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/profile_tagline"
+                android:layout_below="@+id/movie_tagline"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="35dp"
                 android:layout_marginTop="16dp"
@@ -226,10 +232,10 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/profile_overview"
+                android:id="@+id/movie_overview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/profile_headline"
+                android:layout_below="@+id/movie_headline"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="35dp"
@@ -244,7 +250,7 @@
                 android:id="@+id/director"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/profile_overview"
+                android:layout_below="@+id/movie_overview"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="false"
                 android:layout_marginStart="35dp"
@@ -272,7 +278,7 @@
                 android:id="@+id/screenplay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/profile_overview"
+                android:layout_below="@+id/movie_overview"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="45dp"
@@ -306,10 +312,10 @@
                 android:visibility="visible">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerStars"
+                    android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@id/profile_stars"
+                    android:layout_below="@id/movie_stars"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
@@ -317,7 +323,7 @@
                     android:layout_marginBottom="0dp" />
 
                 <TextView
-                    android:id="@+id/profile_stars"
+                    android:id="@+id/movie_stars"
                     android:layout_width="386dp"
                     android:layout_height="40dp"
                     android:layout_alignParentStart="true"
@@ -334,46 +340,6 @@
 
         </RelativeLayout>
 
-
     </ScrollView>
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:background="@color/colorBackground"
-        app:buttonGravity="center_vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/profile_logo"
-            android:layout_width="65dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/imagecontent"
-            android:cropToPadding="true"
-            android:scaleType="centerInside"
-            tools:layout_editor_absoluteX="16dp" />
-    </androidx.appcompat.widget.Toolbar>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bnView"
-        android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:layout_alignParentBottom="true"
-        android:background="#FFFDFD"
-        app:backgroundTint="@color/colorBackground"
-        app:itemBackground="@android:color/transparent"
-        app:itemIconTint="@color/design_default_color_on_primary"
-        app:itemRippleColor="#FFFFFF"
-        app:labelVisibilityMode="unlabeled"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bnv_menu" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
