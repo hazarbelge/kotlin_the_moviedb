@@ -6,12 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.viewbinding.ViewBinding
 import com.hazarbelge.themoviedb.common.getViewModelViaKoin
-import com.hazarbelge.themoviedb.common.ErrorUtils
+import com.hazarbelge.themoviedb.ui.error_message.ErrorMessage
 import java.lang.reflect.ParameterizedType
 
 abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatActivity() {
 
-    private val errorUi by lazy { ErrorUtils(this) }
+    private val errorUi by lazy { ErrorMessage(this) }
 
     private val viewModelClass: Class<VM> by lazy {
         (javaClass.genericSuperclass as ParameterizedType).actualTypeArguments[0] as Class<VM>

@@ -2,8 +2,8 @@ package com.hazarbelge.themoviedb
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
-import com.hazarbelge.themoviedb.ui.main.dependency_injection.homeModule
-import com.hazarbelge.themoviedb.ui.launcher.dependency_injection.launcherModule
+import com.hazarbelge.themoviedb.views.main.dependency_injection.homeModule
+import com.hazarbelge.themoviedb.views.launcher.dependency_injection.launcherModule
 import com.hazarbelge.themoviedb.network.dependency_injection.networkModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger

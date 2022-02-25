@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorLayoutBackground"
-    tools:context=".ui.main.views.movie_detail.view.MovieDetailActivity">
+    tools:context=".views.main.views.movie_detail.view.MovieDetailActivity">
 
     <include
         android:id="@+id/topNavBar"

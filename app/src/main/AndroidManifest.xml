@@ -16,7 +16,7 @@
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute">
         <activity
-            android:name="com.hazarbelge.themoviedb.ui.launcher.view.LauncherActivity"
+            android:name="com.hazarbelge.themoviedb.views.launcher.view.LauncherActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,10 +24,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.hazarbelge.themoviedb.ui.main.views.home.view.HomeActivity" />
+        <activity android:name="com.hazarbelge.themoviedb.views.main.views.home.view.HomeActivity" />
         <activity
-            android:name="com.hazarbelge.themoviedb.ui.main.views.movie_detail.view.MovieDetailActivity"
-            android:parentActivityName="com.hazarbelge.themoviedb.ui.main.views.home.view.HomeActivity">
+            android:name="com.hazarbelge.themoviedb.views.main.views.movie_detail.view.MovieDetailActivity"
+            android:parentActivityName="com.hazarbelge.themoviedb.views.main.views.home.view.HomeActivity">
         </activity>
     </application>
 
