@@ -1,10 +1,10 @@
 package com.hazarbelge.themoviedb.network.repository
 
-import com.hazarbelge.themoviedb.network.model.Cast
-import com.hazarbelge.themoviedb.network.model.Crew
-import com.hazarbelge.themoviedb.network.model.Movie
-import com.hazarbelge.themoviedb.network.model.Movies
-import com.hazarbelge.themoviedb.network.model.Result
+import com.hazarbelge.themoviedb.model.Cast
+import com.hazarbelge.themoviedb.model.Crew
+import com.hazarbelge.themoviedb.model.Movie
+import com.hazarbelge.themoviedb.model.Movies
+import com.hazarbelge.themoviedb.model.Result
 
 interface IMovieDBRepository {
     suspend fun getLatestMovie() : Result<Movie>

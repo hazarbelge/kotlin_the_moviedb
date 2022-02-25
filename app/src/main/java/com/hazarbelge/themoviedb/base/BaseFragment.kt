@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.viewbinding.ViewBinding
 
-import com.hazarbelge.themoviedb.common.getViewModelViaKoin
+import com.hazarbelge.themoviedb.util.getViewModelViaKoin
 
 import java.lang.reflect.ParameterizedType
 

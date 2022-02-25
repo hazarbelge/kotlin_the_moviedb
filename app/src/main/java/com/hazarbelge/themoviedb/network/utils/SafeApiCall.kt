@@ -1,15 +1,12 @@
 package com.hazarbelge.themoviedb.network.utils
 
 import android.util.Log
-import com.hazarbelge.themoviedb.network.model.Result
-import com.hazarbelge.themoviedb.network.model.ServerErrorModel
+import com.hazarbelge.themoviedb.model.Result
+import com.hazarbelge.themoviedb.model.ServerErrorModel
 import com.google.gson.Gson
-import com.hazarbelge.themoviedb.network.model.Movie
-import com.hazarbelge.themoviedb.network.model.Movies
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
-import retrofit2.Call
 import retrofit2.Response
 import java.io.IOException
 

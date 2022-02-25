@@ -5,8 +5,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.viewbinding.ViewBinding
-import com.hazarbelge.themoviedb.common.getViewModelViaKoin
-import com.hazarbelge.themoviedb.ui.error_message.ErrorMessage
+import com.hazarbelge.themoviedb.util.getViewModelViaKoin
+import com.hazarbelge.themoviedb.widget.error_message.ErrorMessage
 import java.lang.reflect.ParameterizedType
 
 abstract class BaseActivity<VM : BaseViewModel, VB : ViewBinding> : AppCompatActivity() {
