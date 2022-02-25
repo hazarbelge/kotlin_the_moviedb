@@ -10,6 +10,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.hazarbelge.themoviedb.R
 import com.hazarbelge.themoviedb.base.BaseActivity
 import com.hazarbelge.themoviedb.common.ItemClickListener
+import com.hazarbelge.themoviedb.common.ProgressDialog
 import com.hazarbelge.themoviedb.databinding.ActivityMovieDetailBinding
 import com.hazarbelge.themoviedb.network.model.Actor
 import com.hazarbelge.themoviedb.ui.main.views.movie_detail.adapter.CastAdapter
@@ -21,6 +22,8 @@ import com.hazarbelge.themoviedb.network.model.Result
 class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDetailBinding>(),
     ItemClickListener<Actor> {
 
+    private var progressDialog: ProgressDialog? = null
+
     override val binding: ActivityMovieDetailBinding by lazy {
         ActivityMovieDetailBinding.inflate(
             layoutInflater
@@ -29,14 +32,10 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setSupportActionBar(binding.topNavBar.toolbar)
+        progressDialog = ProgressDialog(this)
 
-        binding.topNavBar.apply {
-            title = ""
-            returnImageView.setOnClickListener {
-                onBackPressed()
-            }
-        }
+        setSupportActionBar(binding.topNavBar.toolbar)
+        setToolbarActions()
 
         val position = intent.getStringExtra("movieid")
         getMovie(position!!)
@@ -44,35 +43,67 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
         getCrew(position)
     }
 
+    private fun setToolbarActions() {
+        binding.topNavBar.apply {
+            title = ""
+            returnImageView.setOnClickListener {
+                onBackPressed()
+            }
+        }
+    }
+
     private fun getMovie(movieID: String) {
+        progressDialog?.show()
         viewModel.getMovieById(movieID).observe(this) {
-            if (it is Result.Success) {
-                movieDetailResponseHandler(it.data)
+            when (it) {
+                is Result.Success -> {
+                    movieDetailResponseHandler(it.data)
+                }
+                else -> {
+
+                }
+            }
+            if (progressDialog?.isShowing == true) {
+                progressDialog?.dismiss()
             }
         }
     }
 
     private fun getCast(movieID: String) {
+        progressDialog?.show()
         viewModel.getCast(movieID).observe(this) {
-            if (it is Result.Success) {
-                val recyclerAdapter = CastAdapter(this, it.data.cast)
+            when (it) {
+                is Result.Success -> {
+                    val recyclerAdapter = CastAdapter(this, it.data.cast)
 
-                binding.recyclerView.apply {
-                    layoutManager = LinearLayoutManager(
-                        this@MovieDetailActivity,
-                        RecyclerView.HORIZONTAL,
-                        false
-                    )
-                    adapter = recyclerAdapter
+                    binding.recyclerView.apply {
+                        layoutManager = LinearLayoutManager(
+                            this@MovieDetailActivity,
+                            RecyclerView.HORIZONTAL,
+                            false
+                        )
+                        adapter = recyclerAdapter
+                    }
                 }
+                else -> {
+
+                }
+            }
+            if (progressDialog?.isShowing == true) {
+                progressDialog?.dismiss()
             }
         }
     }
 
     private fun getCrew(movieID: String) {
         viewModel.getCrew(movieID).observe(this) {
-            if (it is Result.Success) {
-                responseHandlerCrew(it.data)
+            when (it) {
+                is Result.Success -> {
+                    responseHandlerCrew(it.data)
+                }
+                else -> {
+
+                }
             }
         }
     }
@@ -98,7 +129,7 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
     }
 
     private fun movieDetailResponseHandler(movie: Movie) {
-        if(movie.release_date.isNotEmpty()) {
+        if (movie.release_date.isNotEmpty()) {
             var date = movie.release_date
             val dateYear = date.removeRange(4, date.length)
             var dateMonth = date.removeRange(0, 5)
@@ -182,11 +213,13 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
 
         if (movie.status == "Released") binding.movieStatus.setImageResource(R.drawable.ic_released)
 
-        Glide.with(this@MovieDetailActivity).load(this@MovieDetailActivity.getString(R.string.w600h900) + movie.poster_path)
+        Glide.with(this@MovieDetailActivity)
+            .load(this@MovieDetailActivity.getString(R.string.w600h900) + movie.poster_path)
             .apply(RequestOptions().centerCrop())
             .into(binding.poster)
 
-        Glide.with(this@MovieDetailActivity).load(this@MovieDetailActivity.getString(R.string.w600h900) + movie.backdrop_path)
+        Glide.with(this@MovieDetailActivity)
+            .load(this@MovieDetailActivity.getString(R.string.w600h900) + movie.backdrop_path)
             .apply(RequestOptions().centerCrop())
             .into(binding.bgPoster)
     }
