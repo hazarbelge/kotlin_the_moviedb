@@ -15,11 +15,19 @@ import com.hazarbelge.themoviedb.databinding.FragmentTopRatedBinding
 import com.hazarbelge.themoviedb.ui.main.views.movie_detail.view.MovieDetailActivity
 import com.hazarbelge.themoviedb.model.Movie
 import com.hazarbelge.themoviedb.model.Result
+import com.hazarbelge.themoviedb.util.RecyclerViewScrollListener
 
 class TopRatedFragment : BaseFragment<TopRatedViewModel, FragmentTopRatedBinding>(),
-    ItemClickListener<Movie>, SwipeRefreshLayout.OnRefreshListener{
+    ItemClickListener<Movie>, SwipeRefreshLayout.OnRefreshListener, RecyclerViewScrollListener.ScrollCallback {
 
+    private var allMovies = arrayListOf<Movie>()
     private var progressDialog: ProgressDialog? = null
+    private var page: Int = 1
+    private var totalResults: Int = -1
+    private var isLoading: Boolean = false
+
+    private val topRatedAdapter: TopRatedAdapter = TopRatedAdapter(this)
+    private val mScrollListener by lazy { RecyclerViewScrollListener(this) }
 
     override val binding: FragmentTopRatedBinding by lazy {
         FragmentTopRatedBinding.inflate(
@@ -36,8 +44,17 @@ class TopRatedFragment : BaseFragment<TopRatedViewModel, FragmentTopRatedBinding
         binding.swipe.setOnRefreshListener(this)
         progressDialog = context?.let { ProgressDialog(it) }
 
+        setRecyclerView()
         setFragmentTitle()
-        getTopRatedMovies()
+        getTopRatedMovies(page = page)
+    }
+
+    private fun setRecyclerView() {
+        binding.recyclerview.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = topRatedAdapter
+            addOnScrollListener(mScrollListener)
+        }
     }
 
     private fun setFragmentTitle() {
@@ -46,19 +63,17 @@ class TopRatedFragment : BaseFragment<TopRatedViewModel, FragmentTopRatedBinding
         }
     }
 
-
-    private fun getTopRatedMovies() {
+    private fun getTopRatedMovies(page: Int) {
         progressDialog?.show()
-        viewModel.getTopRatedMovies().observe(viewLifecycleOwner) {
+        viewModel.getTopRatedMovies(page = page).observe(viewLifecycleOwner) {
             when (it) {
                 is Result.Success -> {
                     println("SuccessTopRatedMovies: $it")
-                    if(it.data.results != null) {
-                        val recyclerAdapter = TopRatedAdapter(this, it.data.results)
-                        binding.recyclerview.apply {
-                            layoutManager = LinearLayoutManager(context)
-                            adapter = recyclerAdapter
-                        }
+                    if (it.data.results != null) {
+                        totalResults = it.data.totalResults
+                        allMovies.addAll(it.data.results)
+                        topRatedAdapter.submitList(allMovies)
+                        isLoading = false
                     }
                 }
                 else -> {
@@ -79,6 +94,19 @@ class TopRatedFragment : BaseFragment<TopRatedViewModel, FragmentTopRatedBinding
     }
 
     override fun onRefresh() {
-        getTopRatedMovies()
+        page = 1
+        allMovies.clear()
+        getTopRatedMovies(page = page)
+    }
+
+    override fun onScrollCompleted(firstVisibleItem: Int, isLoadingMoreData: Boolean) {
+        if (allMovies.size != totalResults) {
+            if (!isLoading) {
+                progressDialog!!.show()
+                isLoading = true
+                page = page.plus(1)
+                getTopRatedMovies(page = page)
+            }
+        }
     }
 }

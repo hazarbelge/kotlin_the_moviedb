@@ -15,11 +15,20 @@ import com.hazarbelge.themoviedb.model.Movie
 import com.hazarbelge.themoviedb.model.Result
 import com.hazarbelge.themoviedb.ui.main.views.now_playing.adapter.NowPlayingAdapter
 import com.hazarbelge.themoviedb.ui.main.views.now_playing.viewmodel.NowPlayingViewModel
+import com.hazarbelge.themoviedb.util.RecyclerViewScrollListener
 
 class NowPlayingFragment : BaseFragment<NowPlayingViewModel, FragmentNowPlayingBinding>(),
-    ItemClickListener<Movie>, SwipeRefreshLayout.OnRefreshListener{
+    ItemClickListener<Movie>, SwipeRefreshLayout.OnRefreshListener, RecyclerViewScrollListener.ScrollCallback {
 
+    private var allMovies = arrayListOf<Movie>()
     private var progressDialog: ProgressDialog? = null
+    private var page: Int = 1
+    private var totalResults: Int = -1
+    private var isLoading: Boolean = false
+
+    private val nowPlayingAdapter: NowPlayingAdapter = NowPlayingAdapter(this)
+    private val mScrollListener by lazy { RecyclerViewScrollListener(this) }
+
 
     override val binding: FragmentNowPlayingBinding by lazy {
         FragmentNowPlayingBinding.inflate(
@@ -36,8 +45,17 @@ class NowPlayingFragment : BaseFragment<NowPlayingViewModel, FragmentNowPlayingB
         binding.swipe.setOnRefreshListener(this)
         progressDialog = context?.let { ProgressDialog(it) }
 
+        setRecyclerView()
         setFragmentTitle()
-        getNowPlayingMovies()
+        getNowPlayingMovies(page = page)
+    }
+
+    private fun setRecyclerView() {
+        binding.recyclerview.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = nowPlayingAdapter
+            addOnScrollListener(mScrollListener)
+        }
     }
 
     private fun setFragmentTitle() {
@@ -46,19 +64,17 @@ class NowPlayingFragment : BaseFragment<NowPlayingViewModel, FragmentNowPlayingB
         }
     }
 
-
-    private fun getNowPlayingMovies() {
+    private fun getNowPlayingMovies(page: Int) {
         progressDialog?.show()
-        viewModel.getNowPlayingMovies().observe(viewLifecycleOwner) {
+        viewModel.getNowPlayingMovies(page = page).observe(viewLifecycleOwner) {
             when (it) {
                 is Result.Success -> {
                     println("SuccessNowPlayingMovies: $it")
-                    if(it.data.results != null) {
-                        val recyclerAdapter = NowPlayingAdapter(this, it.data.results)
-                        binding.recyclerview.apply {
-                            layoutManager = LinearLayoutManager(context)
-                            adapter = recyclerAdapter
-                        }
+                    if (it.data.results != null) {
+                        totalResults = it.data.totalResults
+                        allMovies.addAll(it.data.results)
+                        nowPlayingAdapter.submitList(allMovies)
+                        isLoading = false
                     }
                 }
                 else -> {
@@ -79,6 +95,19 @@ class NowPlayingFragment : BaseFragment<NowPlayingViewModel, FragmentNowPlayingB
     }
 
     override fun onRefresh() {
-        getNowPlayingMovies()
+        page = 1
+        allMovies.clear()
+        getNowPlayingMovies(page = page)
+    }
+
+    override fun onScrollCompleted(firstVisibleItem: Int, isLoadingMoreData: Boolean) {
+        if (allMovies.size != totalResults) {
+            if (!isLoading) {
+                progressDialog!!.show()
+                isLoading = true
+                page = page.plus(1)
+                getNowPlayingMovies(page = page)
+            }
+        }
     }
 }

@@ -15,11 +15,19 @@ import com.hazarbelge.themoviedb.ui.main.views.movie_detail.view.MovieDetailActi
 import com.hazarbelge.themoviedb.model.Movie
 import com.hazarbelge.themoviedb.model.Result
 import com.hazarbelge.themoviedb.ui.main.views.popular.viewmodel.PopularViewModel
+import com.hazarbelge.themoviedb.util.RecyclerViewScrollListener
 
 class PopularFragment : BaseFragment<PopularViewModel, FragmentPopularBinding>(),
-    ItemClickListener<Movie>, SwipeRefreshLayout.OnRefreshListener{
+    ItemClickListener<Movie>, SwipeRefreshLayout.OnRefreshListener, RecyclerViewScrollListener.ScrollCallback {
 
+    private var allMovies = arrayListOf<Movie>()
     private var progressDialog: ProgressDialog? = null
+    private var page: Int = 1
+    private var totalResults: Int = -1
+    private var isLoading: Boolean = false
+
+    private val popularAdapter: PopularAdapter = PopularAdapter(this)
+    private val mScrollListener by lazy { RecyclerViewScrollListener(this) }
 
     override val binding: FragmentPopularBinding by lazy {
         FragmentPopularBinding.inflate(
@@ -36,8 +44,17 @@ class PopularFragment : BaseFragment<PopularViewModel, FragmentPopularBinding>()
         binding.swipe.setOnRefreshListener(this)
         progressDialog = context?.let { ProgressDialog(it) }
 
+        setRecyclerView()
         setFragmentTitle()
-        getPopularMovies()
+        getPopularMovies(page = page)
+    }
+
+    private fun setRecyclerView() {
+        binding.recyclerview.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = popularAdapter
+            addOnScrollListener(mScrollListener)
+        }
     }
 
     private fun setFragmentTitle() {
@@ -46,19 +63,17 @@ class PopularFragment : BaseFragment<PopularViewModel, FragmentPopularBinding>()
         }
     }
 
-
-    private fun getPopularMovies() {
+    private fun getPopularMovies(page: Int) {
         progressDialog?.show()
-        viewModel.getPopularMovies().observe(viewLifecycleOwner) {
+        viewModel.getPopularMovies(page = page).observe(viewLifecycleOwner) {
             when (it) {
                 is Result.Success -> {
-                    println("SuccessPopularMovies: $it")
-                    if(it.data.results != null) {
-                        val recyclerAdapter = PopularAdapter(this, it.data.results)
-                        binding.recyclerview.apply {
-                            layoutManager = LinearLayoutManager(context)
-                            adapter = recyclerAdapter
-                        }
+                    println("SuccessNowPlayingMovies: $it")
+                    if (it.data.results != null) {
+                        totalResults = it.data.totalResults
+                        allMovies.addAll(it.data.results)
+                        popularAdapter.submitList(allMovies)
+                        isLoading = false
                     }
                 }
                 else -> {
@@ -79,6 +94,19 @@ class PopularFragment : BaseFragment<PopularViewModel, FragmentPopularBinding>()
     }
 
     override fun onRefresh() {
-        getPopularMovies()
+        page = 1
+        allMovies.clear()
+        getPopularMovies(page = page)
+    }
+
+    override fun onScrollCompleted(firstVisibleItem: Int, isLoadingMoreData: Boolean) {
+        if (allMovies.size != totalResults) {
+            if (!isLoading) {
+                progressDialog!!.show()
+                isLoading = true
+                page = page.plus(1)
+                getPopularMovies(page = page)
+            }
+        }
     }
 }

@@ -20,13 +20,17 @@
         android:background="@color/colorLayoutBackground"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/topNavBar" />
 
     <include
         android:id="@+id/bottomNavBar"
+        layout="@layout/layout_bottom_nav_bar"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        layout="@layout/layout_bottom_nav_bar"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

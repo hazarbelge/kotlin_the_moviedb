@@ -9,17 +9,26 @@ import com.hazarbelge.themoviedb.R
 import com.hazarbelge.themoviedb.ui.main.views.upcoming.adapter.UpcomingAdapter
 import com.hazarbelge.themoviedb.ui.main.views.upcoming.viewmodel.UpcomingViewModel
 import com.hazarbelge.themoviedb.base.BaseFragment
+import com.hazarbelge.themoviedb.databinding.FragmentUpcomingBinding
 import com.hazarbelge.themoviedb.util.ItemClickListener
 import com.hazarbelge.themoviedb.widget.dialog.ProgressDialog
-import com.hazarbelge.themoviedb.databinding.FragmentUpcomingBinding
 import com.hazarbelge.themoviedb.ui.main.views.movie_detail.view.MovieDetailActivity
 import com.hazarbelge.themoviedb.model.Movie
 import com.hazarbelge.themoviedb.model.Result
+import com.hazarbelge.themoviedb.util.RecyclerViewScrollListener
 
 class UpcomingFragment : BaseFragment<UpcomingViewModel, FragmentUpcomingBinding>(),
-    ItemClickListener<Movie>, SwipeRefreshLayout.OnRefreshListener{
+    ItemClickListener<Movie>, SwipeRefreshLayout.OnRefreshListener, RecyclerViewScrollListener.ScrollCallback {
 
+    private var allMovies = arrayListOf<Movie>()
     private var progressDialog: ProgressDialog? = null
+    private var page: Int = 1
+    private var totalResults: Int = -1
+    private var isLoading: Boolean = false
+
+    private val upcomingAdapter: UpcomingAdapter = UpcomingAdapter(this)
+    private val mScrollListener by lazy { RecyclerViewScrollListener(this) }
+
 
     override val binding: FragmentUpcomingBinding by lazy {
         FragmentUpcomingBinding.inflate(
@@ -36,8 +45,17 @@ class UpcomingFragment : BaseFragment<UpcomingViewModel, FragmentUpcomingBinding
         binding.swipe.setOnRefreshListener(this)
         progressDialog = context?.let { ProgressDialog(it) }
 
+        setRecyclerView()
         setFragmentTitle()
-        getUpcomingMovies()
+        getUpcomingMovies(page = page)
+    }
+
+    private fun setRecyclerView() {
+        binding.recyclerview.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = upcomingAdapter
+            addOnScrollListener(mScrollListener)
+        }
     }
 
     private fun setFragmentTitle() {
@@ -46,19 +64,17 @@ class UpcomingFragment : BaseFragment<UpcomingViewModel, FragmentUpcomingBinding
         }
     }
 
-
-    private fun getUpcomingMovies() {
+    private fun getUpcomingMovies(page: Int) {
         progressDialog?.show()
-        viewModel.getUpcomingMovies().observe(viewLifecycleOwner) {
+        viewModel.getUpcomingMovies(page = page).observe(viewLifecycleOwner) {
             when (it) {
                 is Result.Success -> {
                     println("SuccessUpcomingMovies: $it")
                     if (it.data.results != null) {
-                        val recyclerAdapter = UpcomingAdapter(this, it.data.results)
-                        binding.recyclerview.apply {
-                            layoutManager = LinearLayoutManager(context)
-                            adapter = recyclerAdapter
-                        }
+                        totalResults = it.data.totalResults
+                        allMovies.addAll(it.data.results)
+                        upcomingAdapter.submitList(allMovies)
+                        isLoading = false
                     }
                 }
                 else -> {
@@ -79,6 +95,19 @@ class UpcomingFragment : BaseFragment<UpcomingViewModel, FragmentUpcomingBinding
     }
 
     override fun onRefresh() {
-        getUpcomingMovies()
+        page = 1
+        allMovies.clear()
+        getUpcomingMovies(page = page)
+    }
+
+    override fun onScrollCompleted(firstVisibleItem: Int, isLoadingMoreData: Boolean) {
+        if (allMovies.size != totalResults) {
+            if (!isLoading) {
+                progressDialog!!.show()
+                isLoading = true
+                page = page.plus(1)
+                getUpcomingMovies(page = page)
+            }
+        }
     }
 }

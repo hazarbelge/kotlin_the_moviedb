@@ -14,5 +14,3 @@ data class Movie(
     val production_countries: List<Map<String, String>>,
     val status: String,
 )
-
-data class Movies(val results: List<Movie>?)

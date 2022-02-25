@@ -12,26 +12,26 @@ class MovieDBRepository(private val movieDBService: MovieDBService) : IMovieDBRe
         }
     }
 
-    override suspend fun getNowPlayingMovies() = withContext(Dispatchers.IO) {
-        call { movieDBService.getNowPlayingMovies() }.apply {
+    override suspend fun getNowPlayingMovies(page: Int) = withContext(Dispatchers.IO) {
+        call { movieDBService.getNowPlayingMovies(page = page) }.apply {
             return@withContext this
         }
     }
 
-    override suspend fun getPopularMovies() = withContext(Dispatchers.IO) {
-        call { movieDBService.getPopularMovies() }.apply {
+    override suspend fun getPopularMovies(page: Int) = withContext(Dispatchers.IO) {
+        call { movieDBService.getPopularMovies(page = page) }.apply {
             return@withContext this
         }
     }
 
-    override suspend fun getTopRatedMovies() = withContext(Dispatchers.IO) {
-        call { movieDBService.getTopRatedMovies() }.apply {
+    override suspend fun getTopRatedMovies(page: Int) = withContext(Dispatchers.IO) {
+        call { movieDBService.getTopRatedMovies(page = page) }.apply {
             return@withContext this
         }
     }
 
-    override suspend fun getUpcomingMovies() = withContext(Dispatchers.IO) {
-        call { movieDBService.getUpcomingMovies() }.apply {
+    override suspend fun getUpcomingMovies(page: Int) = withContext(Dispatchers.IO) {
+        call { movieDBService.getUpcomingMovies(page = page) }.apply {
             return@withContext this
         }
     }

@@ -5,7 +5,7 @@ import com.hazarbelge.themoviedb.network.repository.IMovieDBRepository
 import com.hazarbelge.themoviedb.base.BaseViewModel
 
 class PopularViewModel(private val repository: IMovieDBRepository) : BaseViewModel() {
-    fun getPopularMovies() = liveData {
-        emit(repository.getPopularMovies())
+    fun getPopularMovies(page: Int) = liveData {
+        emit(repository.getPopularMovies(page = page))
     }
 }

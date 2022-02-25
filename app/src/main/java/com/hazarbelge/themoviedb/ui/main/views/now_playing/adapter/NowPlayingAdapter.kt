@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -19,9 +21,8 @@ import java.time.format.TextStyle
 import java.util.*
 
 class NowPlayingAdapter(
-    private var callback: ItemClickListener<Movie>,
-    private val movieList: List<Movie>,
-) : RecyclerView.Adapter<NowPlayingAdapter.NowPlayingViewHolder>() {
+    private var callback: ItemClickListener<Movie>
+) : ListAdapter<Movie, NowPlayingAdapter.NowPlayingViewHolder>(UserDiffCallBack()) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -31,13 +32,21 @@ class NowPlayingAdapter(
         return NowPlayingViewHolder(inflate)
     }
 
-    override fun getItemCount(): Int = movieList.size
+    class UserDiffCallBack : DiffUtil.ItemCallback<Movie>() {
+        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+            return oldItem.id == newItem.id
+        }
+    }
 
     override fun onBindViewHolder(
         viewHolder: NowPlayingAdapter.NowPlayingViewHolder,
         position: Int
     ) {
-        val movie: Movie = movieList[position]
+        val movie: Movie = getItem(position)
 
         if (VERSION.SDK_INT >= VERSION_CODES.O) {
             val date = LocalDate.parse(movie.release_date)

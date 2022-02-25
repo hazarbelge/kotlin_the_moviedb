@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -19,25 +21,32 @@ import java.time.format.TextStyle
 import java.util.*
 
 class PopularAdapter(
-    private var callback: ItemClickListener<Movie>,
-    private val movieList: List<Movie>,
-) : RecyclerView.Adapter<PopularAdapter.PopularViewHolder>() {
+    private var callback: ItemClickListener<Movie>
+) : ListAdapter<Movie, PopularAdapter.PopularViewHolder>(UserDiffCallBack()) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): PopularViewHolder {
+    ): PopularAdapter.PopularViewHolder {
         val inflate = LayoutInflater.from(parent.context).inflate(R.layout.movie_items, null)
         return PopularViewHolder(inflate)
     }
 
-    override fun getItemCount(): Int = movieList.size
+    class UserDiffCallBack : DiffUtil.ItemCallback<Movie>() {
+        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+            return oldItem.id == newItem.id
+        }
+    }
 
     override fun onBindViewHolder(
-        viewHolder: PopularViewHolder,
+        viewHolder: PopularAdapter.PopularViewHolder,
         position: Int
     ) {
-        val movie: Movie = movieList[position]
+        val movie: Movie = getItem(position)
 
         if (VERSION.SDK_INT >= VERSION_CODES.O) {
             val date = LocalDate.parse(movie.release_date)
@@ -69,8 +78,9 @@ class PopularAdapter(
             text = movie.overview
         }
 
-        if(movie.poster_path != null) {
-            Glide.with(viewHolder.posterPath.context).load(viewHolder.posterPath.context.getString(R.string.w220h330) + movie.poster_path)
+        if (movie.poster_path != null) {
+            Glide.with(viewHolder.posterPath.context)
+                .load(viewHolder.posterPath.context.getString(R.string.w220h330) + movie.poster_path)
                 .apply(RequestOptions().centerCrop())
                 .into(viewHolder.posterPath)
         }

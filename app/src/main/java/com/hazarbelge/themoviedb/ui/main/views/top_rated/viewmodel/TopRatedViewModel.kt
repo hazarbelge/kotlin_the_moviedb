@@ -5,7 +5,7 @@ import com.hazarbelge.themoviedb.network.repository.IMovieDBRepository
 import com.hazarbelge.themoviedb.base.BaseViewModel
 
 class TopRatedViewModel(private val repository: IMovieDBRepository) : BaseViewModel() {
-    fun getTopRatedMovies() = liveData {
-        emit(repository.getTopRatedMovies())
+    fun getTopRatedMovies(page: Int) = liveData {
+        emit(repository.getTopRatedMovies(page = page))
     }
 }
