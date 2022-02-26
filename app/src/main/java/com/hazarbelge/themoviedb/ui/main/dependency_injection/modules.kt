@@ -10,7 +10,7 @@ import com.hazarbelge.themoviedb.ui.main.views.upcoming.viewmodel.UpcomingViewMo
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val homeModule = module {
+val mainModule = module {
     viewModel { HomeViewModel() }
     viewModel { LatestViewModel(get()) }
     viewModel { NowPlayingViewModel(get()) }
